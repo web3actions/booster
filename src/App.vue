@@ -1,5 +1,5 @@
 <template>
-  <div>ETH Booster</div>
+  <h1 class="text-4xl">ETH Booster</h1>
 </template>
 
 <script setup></script>
