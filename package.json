@@ -8,6 +8,7 @@
     "deploy": "push-dir --dir=dist --branch=gh-pages"
   },
   "dependencies": {
+    "ethers": "^5.4.3",
     "vue": "^3.0.5"
   },
   "devDependencies": {
