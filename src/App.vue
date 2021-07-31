@@ -10,32 +10,65 @@
         <input type="number" min="0" v-model.number="amount" class="w-full rounded-3xl border-4 px-6 py-5 text-4xl text-center border-gray-300" />
         <span class="text-4xl text-gray-700">ETH</span>
       </div>
-      <button @click="deposit" :disabled="!amount" class="bg-gray-800 hover:bg-gray-900 disabled:opacity-50 disabled:cursor-not-allowed w-full mt-10 text-white text-4xl px-10 py-5 rounded-3xl">
+      <button @click="deposit(issue.node_id)" :disabled="!amount" class="bg-gray-800 hover:bg-gray-900 disabled:opacity-50 disabled:cursor-not-allowed w-full mt-10 text-white text-4xl px-10 py-5 rounded-3xl">
         Deposit
       </button>
+    </div>
+    <div class="space-y-3 text-center">
+      <button @click="getDeposits" class="mt-5 bg-gray-800 hover:bg-gray-900 text-white px-3 py-2 rounded-xl">
+        load your existing deposits
+      </button>
+      <div v-for="(deposit, index) in deposits" class="flex space-x-3 p-3 border-2 border-gray-300 rounded-xl">
+        <div>
+          {{ deposit.issueId }}<br>
+          {{ ethers.utils.formatEther(deposit.value) }} ETH
+        </div>
+        <button @click="cancelDeposit(index)" class="bg-red-800 hover:bg-red-900 text-white px-3 py-2 rounded-xl">
+          cancel
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref, watchEffect } from 'vue'
-import { ethers } from "ethers"
+import { ethers } from 'ethers'
 
 const url = ref('')
 const issue = ref(null)
 const amount = ref(0)
 const ethereumEnabled = ref(!!window.ethereum)
+const deposits = ref([])
 
 const ethProvider = new ethers.providers.Web3Provider(window.ethereum)
 const ethSigner = ethProvider.getSigner()
+const contractAddress = '0x510a6f38a35f38eb8ff4708036ac4069b19094c8'
+const abi = [
+  'function getDeposits() view returns(tuple(string issueId,uint256 value)[])',
+  'function deposit(string) payable',
+  'function cancel(uint256)',
+  'function withdraw(string,address)'
+]
+const contract = new ethers.Contract(contractAddress, abi, ethProvider)
+const contractWithSigner = contract.connect(ethSigner)
 
-const deposit = async () => {
-  await ethProvider.send("eth_requestAccounts", [])
-  console.log("Account:", await ethSigner.getAddress())
-  // const tx = ethSigner.sendTransaction({
-  //     to: '0x27711f9c07230632F2EE1A21a967a9AC4729E520',
-  //     value: ethers.utils.parseEther(amount.value.toString())
-  // })
+const getDeposits = async () => {
+  await ethProvider.send('eth_requestAccounts', [])
+  const allDeposits = await contractWithSigner.getDeposits()
+  deposits.value = allDeposits.filter(d => Number(d.value) > 0)
+}
+
+const deposit = async (issueId) => {
+  if (!issueId) return
+  await ethProvider.send('eth_requestAccounts', [])
+  const tx = await contractWithSigner.deposit(issueId, { value: ethers.utils.parseEther(amount.value.toString()) })
+}
+
+const cancelDeposit = async (index) => {
+  await ethProvider.send('eth_requestAccounts', [])
+  const tx = await contractWithSigner.cancel(index)
+  getDeposits()
 }
 
 watchEffect(async () => {
