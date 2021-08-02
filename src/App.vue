@@ -77,7 +77,7 @@ const loadingDeposits = ref(false)
 
 const ethProvider = new ethers.providers.Web3Provider(window.ethereum)
 const ethSigner = ethProvider.getSigner()
-const contractAddress = '0x2A8c2c6D428946bD8AF0Db1CDb565787EDb6152e'
+const contractAddress = '0x4dfA9e8224fF26e35b7A5843F1238b04425710b8'
 const abi = [
   'function getDepositIdsBySender() view returns(uint256[])',
   'function getDepositById(uint256) view returns(address sender,string issueId,uint256 value)',
