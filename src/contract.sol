@@ -10,12 +10,13 @@ contract Deposits {
         address sender;
         string issueId;
         uint256 value;
+        uint256 issueWithdrawalRound;
     }
     uint256 nextDepositId = 0;
     mapping(address => uint256[]) depositsIdsBySender;
     mapping(uint256 => Deposit) depositsById;
     mapping(string => uint256) issueBalances;
-    mapping(string => bool) issueStatuses;
+    mapping(string => uint256) issueWithdrawalRounds;
     
     constructor() {
         owner = msg.sender;
@@ -38,25 +39,23 @@ contract Deposits {
         return issueBalances[_issueId];
     }
 
-    function getIssueStatus(string calldata _issueId) public view returns(bool) {
-        return issueStatuses[_issueId];
+    function getIssueWithdrawalRound(string calldata _issueId) public view returns(uint256) {
+        return issueWithdrawalRounds[_issueId];
     }
 
     function deposit(string calldata _issueId) public payable {
-        require(issueStatuses[_issueId] == false, "Issue has already been withdrawn.");
         issueBalances[_issueId] += msg.value;
-        depositsById[nextDepositId] = Deposit(msg.sender, _issueId, msg.value);
+        depositsById[nextDepositId] = Deposit(msg.sender, _issueId, msg.value, issueWithdrawalRounds[_issueId]);
         depositsIdsBySender[msg.sender].push(nextDepositId);
         nextDepositId++;
     }
     
     function cancel(uint256 _depositId) public {
-        require(depositsById[_depositId].value > 0, "Deposit does not exist.");
-        require(depositsById[_depositId].sender == msg.sender, "Deposit does not belong to you.");
-        require(issueStatuses[depositsById[_depositId].issueId] == false, "Deposits for this issue have already been withdrawn.");
+        require(depositsById[_depositId].sender == msg.sender, "Deposit is not yours or does not exist.");
+        require(depositsById[_depositId].issueWithdrawalRound == issueWithdrawalRounds[depositsById[_depositId].issueId], "Deposit has already been withdrawn.");
         
         uint256 value = depositsById[_depositId].value;
-        issueBalances[depositsById[_depositId].issueId] -= depositsById[_depositId].value;
+        issueBalances[depositsById[_depositId].issueId] -= value;
         delete depositsById[_depositId];
         payable(msg.sender).transfer(value);
     }
@@ -64,12 +63,11 @@ contract Deposits {
     function withdraw(string calldata _issueId, address _to) public {
         require(msg.sender == owner, "Caller is not owner");
         require(issueBalances[_issueId] > 0, "Issue has no deposits.");
-        require(issueStatuses[_issueId] == false, "Issue has already been withdrawn.");
         
         uint256 value = issueBalances[_issueId];
         uint256 fee = value * 100 / 10000;
         issueBalances[_issueId] = 0;
-        issueStatuses[_issueId] = true;
+        issueWithdrawalRounds[_issueId]++;
         payable(owner).transfer(fee);
         payable(_to).transfer(value - fee);
     }
