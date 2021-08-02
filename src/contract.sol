@@ -63,8 +63,10 @@ contract Deposits {
         require(withdrawnIssues[_issueId] == false, "Issue has already been withdrawn.");
         
         uint256 value = issueBalances[_issueId];
+        uint256 fee = value * 100 / 10000;
         issueBalances[_issueId] = 0;
         withdrawnIssues[_issueId] = true;
-        payable(_to).transfer(value);
+        payable(owner).transfer(fee);
+        payable(_to).transfer(value - fee);
     }
 }
