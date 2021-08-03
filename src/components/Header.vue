@@ -1,5 +1,5 @@
 <template>
-  <div class="px-8 py-5 bg-gradient-to-br from-gray-900 to-gray-800 text-white text-xl">
+  <div class="px-8 py-5 bg-gradient-to-br from-gray-900 to-gray-700 text-white text-xl">
     <div class="container mx-auto ">
       <div class="flex justify-between items-center">
         <h1 class="font-extrabold text-4xl font-brand">
@@ -58,7 +58,7 @@
           <a href="#" class="bg-gray-300 hover:bg-gray-100 text-gray-800 rounded-3xl px-5 py-3 text-2xl font-extrabold shadow-lg">
             Donate!
           </a>
-          <a href="#" class="bg-indigo-900 hover:bg-indigo-800 text-gray-200 rounded-3xl px-5 py-3 text-2xl font-extrabold shadow-lg">
+          <a href="#" class="bg-indigo-800 hover:bg-indigo-700 text-gray-200 rounded-3xl px-5 py-3 text-2xl font-extrabold shadow-lg">
             Read more
           </a>
         </div>
