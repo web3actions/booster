@@ -1,0 +1,126 @@
+<template>
+  <Nav />
+  <div class="px-10 mx-auto flex flex-col items-center justify-center min-h-screen sm:w-full md:w-2/3 lg:w-1/2">
+    <div v-if="!ethereumEnabled" class="text-red-900 mb-5">
+      Ethereum is not supported by your browser. <a href="https://metamask.io"><u>Install MetaMask</u></a>
+    </div>
+    <DepositConfirmation v-if="depositTx && issue" :issue="issue" :amount="amount" :depositTx="depositTx" :reset="reset" />
+    <div v-else>
+      <input type="text" v-model="url" class="w-full bg-white bg-opacity-20 rounded-3xl border-0 px-10 py-5 text-4xl text-white text-center" placeholder="https://github.com/..." />
+      <div v-if="issue" class="flex flex-col items-center justify-center relative">
+        <h1 class="text-3xl text-gray-600 text-center mb-10 p-4 border-2 border-gray-300 rounded-3xl">{{ issue.title }}</h1>
+        <div class="flex items-center space-x-5 md:w-full lg:w-3/4 xl:w-1/2">
+          <input type="number" min="0" v-model.number="amount" class="w-full rounded-3xl border-4 px-6 py-5 text-4xl text-center border-gray-300" />
+          <span class="text-4xl text-gray-700">ETH</span>
+        </div>
+        <button @click="deposit(issue.node_id)" :disabled="!amount || waitingForConfirmation" class="bg-gray-800 hover:bg-gray-900 disabled:opacity-50 disabled:cursor-not-allowed w-full mt-10 text-white text-4xl px-10 py-5 rounded-3xl whitespace-nowrap">
+          <span v-if="waitingForConfirmation">
+            <i class="fas fa-circle-notch fa-spin"></i> Waiting for Confirmation
+          </span>
+          <span v-else>Deposit</span>
+        </button>
+      </div>
+      <div class="space-y-3 text-center">
+        <button @click="getDeposits" class="mt-5 bg-gray-800 hover:bg-gray-900 text-white px-3 py-2 rounded-xl">
+          <i v-if="loadingDeposits" class="fas fa-circle-notch fa-spin"></i> load your existing deposits
+        </button>
+        <div v-for="deposit in deposits" class="flex space-x-3 justify-between p-3 border-2 border-gray-300 rounded-xl">
+          <div>
+            {{ deposit.issueId }}<br>
+            {{ ethers.utils.formatEther(deposit.value) }} ETH
+          </div>
+          <button @click="cancelDeposit(deposit.id)" class="bg-red-800 hover:bg-red-900 text-white px-3 py-2 rounded-xl">
+            <i v-if="waitingForCancelConfirmation == deposit.id" class="fas fa-circle-notch fa-spin"></i>
+            <span v-else>cancel</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import Nav from './components/Nav.vue'
+import DepositConfirmation from './components/DepositConfirmation.vue'
+import { ref, watchEffect } from 'vue'
+import { ethers } from 'ethers'
+
+const url = ref('')
+const issue = ref(null)
+const amount = ref(0)
+const ethereumEnabled = ref(!!window.ethereum)
+const deposits = ref([])
+const depositTx = ref(null)
+const waitingForConfirmation = ref(false)
+const waitingForCancelConfirmation = ref(null)
+const loadingDeposits = ref(false)
+
+const ethProvider = new ethers.providers.Web3Provider(window.ethereum)
+const ethSigner = ethProvider.getSigner()
+const contractAddress = '0x29E80Eb524F44459B76A67206eDbBa0880851376'
+const abi = [
+  'function getDepositIdsBySender() view returns(uint256[])',
+  'function getDepositById(uint256) view returns(address sender,string issueId,uint256 value)',
+  'function deposit(string) payable',
+  'function cancel(uint256)',
+  'function withdraw(string,address)'
+]
+const contract = new ethers.Contract(contractAddress, abi, ethProvider)
+const contractWithSigner = contract.connect(ethSigner)
+
+const getDeposits = async () => {
+  await ethProvider.send('eth_requestAccounts', [])
+  loadingDeposits.value = true
+  deposits.value = []
+  const depositIds = await contractWithSigner.getDepositIdsBySender()
+  depositIds.forEach(async depositId => {
+    const deposit = await contractWithSigner.getDepositById(depositId)
+    if (deposit.value > 0) {
+      deposits.value.push({
+        id: depositId,
+        issueId: deposit.issueId,
+        value: deposit.value
+      })
+    }
+  })
+  loadingDeposits.value = false
+}
+
+const deposit = async (issueId) => {
+  if (!issueId) return
+  waitingForConfirmation.value = true
+  await ethProvider.send('eth_requestAccounts', [])
+  const tx = await contractWithSigner.deposit(issueId, { value: ethers.utils.parseEther(amount.value.toString()) })
+  depositTx.value = await tx.wait()
+  waitingForConfirmation.value = false
+}
+
+const cancelDeposit = async (depositId) => {
+  await ethProvider.send('eth_requestAccounts', [])
+  waitingForCancelConfirmation.value = depositId
+  try {
+    const tx = await contractWithSigner.cancel(depositId)
+    await tx.wait()
+    getDeposits()
+  } finally {
+    waitingForCancelConfirmation.value = null
+  }
+}
+
+const reset = () => {
+  url.value = ''
+  issue.value = null
+  amount.value = 0
+  depositTx.value = null
+}
+
+watchEffect(async () => {
+  const urlParts = url.value.match(/^https:\/\/github\.com\/([\w-]+)\/([\w-]+)\/issues\/(\d+)$/)
+  if (urlParts) {
+    const response = await fetch(`https://api.github.com/repos/${urlParts[1]}/${urlParts[2]}/issues/${urlParts[3]}`)
+    issue.value = await response.json()
+  } else {
+    issue.value = null
+  }
+})
+</script>
