@@ -1,9 +1,14 @@
 <template>
   <div class="relative bg-gradient-to-r from-white to-gray-800 rounded-3xl">
-    <div class="p-5 rounded-3xl shadow-md bg-gray-800 text-white relative z-10">
+    <a href="https://github.com/mktcode/mktcode/issues/3" target="__blank" class="p-5 rounded-3xl shadow-md bg-gray-800 hover:bg-gray-900 text-white block relative z-10">
       <div class="text-gray-500">trezor/trezor-firmware</div>
       <h3 class="font-bold text-xl truncate">Adding support of EIP-712 into Ethereum app</h3>
-    </div>
+      <div class="flex space-x-2 mt-1">
+        <div class="bg-gray-700 rounded-full px-2 py-1 text-xs text-gray-300">Vue</div>
+        <div class="bg-gray-700 rounded-full px-2 py-1 text-xs text-gray-300">bug</div>
+        <div class="bg-gray-700 rounded-full px-2 py-1 text-xs text-gray-300">help-wanted</div>
+      </div>
+    </a>
     <div class="rounded-b-3xl overflow-hidden shadow-md text-gray-800 relative z-0 -mt-5 pt-5 flex">
       <div class="bg-white flex items-center">
         <div class="text-2xl px-5 font-bold whitespace-nowrap">
