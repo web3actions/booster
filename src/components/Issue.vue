@@ -9,8 +9,8 @@
         <div class="bg-gray-700 rounded-full px-2 py-1 text-xs text-gray-300">help-wanted</div>
       </div>
     </a>
-    <div class="rounded-b-3xl shadow-md text-gray-800 bg-gray-100 relative z-0 -mt-5 pt-5 flex justify-between">
-      <div class="rounded-bl-3xl flex items-center">
+    <div class="rounded-b-3xl shadow-md text-gray-800 relative z-0 -mt-5 pt-5 flex justify-between">
+      <div class="bg-gray-100 rounded-bl-3xl flex items-center">
         <div class="text-2xl px-3 font-bold whitespace-nowrap">
           0.75 ETH
         </div>
@@ -24,7 +24,7 @@
           </a>
         </div>
       </div>
-      <div class="p-1 rounded-r-3xl flex">
+      <div class="bg-gray-100 p-1 rounded-r-3xl flex">
         <a href="#" class="text-indigo-900 rounded-full p-1 inline-block hover:text-white hover:bg-indigo-900 hover:shadow-md">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 inline opacity-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />
