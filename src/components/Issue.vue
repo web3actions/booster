@@ -26,15 +26,15 @@
       </div>
       <div class="bg-gray-100 flex-1"></div>
       <div class="bg-gray-100 p-1 rounded-r-3xl flex">
-        <a href="#" class="text-indigo-900 rounded-full p-1 inline-block hover:text-white hover:bg-indigo-900 hover:shadow-md">
+        <a href="https://github.com/ethbooster/oracle/issues/new?labels=withdraw&template=withdraw.md&title=Withdraw&body=https%3A%2F%2Fgithub.com%2Fmktcode%2Fmktcode%2Fissues%2F3%0A0x27711f9c07230632F2EE1A21a967a9AC4729E520" target="__blank" class="text-indigo-900 rounded-full p-1 inline-block hover:text-white hover:bg-indigo-900 hover:shadow-md">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 inline opacity-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />
           </svg>
         </a>
-        <a href="#" class="text-indigo-900 rounded-full p-1 inline-block hover:text-white hover:bg-indigo-900 hover:shadow-md">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 inline opacity-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m 7.0027808,13.28056 c 0.3781587,0.09097 -1.4858784,0.05887 -1.4858784,0.05887 0,0 0.7349123,2.222575 3.1929439,2.340303 0,0 -1.5233375,1.617877 -5.0730349,1.471608 0,0 3.0127834,2.163711 7.4276076,1.295016 0,0 3.988505,-0.677832 6.136161,-4.532554 0,0 1.384204,-2.088792 1.384204,-5.0320079 0,0 -0.02854,-0.353186 0.338916,-0.6760479 0,0 1.052423,-0.9560994 1.385987,-1.457338 0,0 -1.475176,0.4709145 -1.887226,0.4851847 0,0 1.295015,-1.0595579 1.382419,-1.8693883 0,0 -1.000693,0.5511841 -1.971062,0.7866414 0,0 -0.162323,0.067783 -0.367456,-0.153404 0,0 -0.9561,-1.0880981 -2.811219,-0.8241006 0,0 -2.413437,0.3817262 -2.825487,2.884352 0,0 -0.148053,0.7955604 0.04459,1.266475 0,0 -4.0759091,-0.01427 -7.0779899,-3.590724 0,0 -1.4573381,2.7077591 1.0006936,4.5325536 0,0 -0.4566445,0.146268 -1.4858784,-0.3674564 -0.00178,-0.00357 0.012486,2.7345164 2.6917053,3.3820234 z" />
-        </svg>
+        <a href="https://twitter.com/intent/tweet?text=Earn%200.075%20ETH%20by%20solving%20this%20issue%3A%20https%3A%2F%2Fgithub.com%2Fmktcode%2Fmktcode%2Fissues%2F3%20%23ethbooster%20%23ethereum%20%23opensource%20%23github" target="__blank" class="text-indigo-900 rounded-full p-1 inline-block hover:text-white hover:bg-indigo-900 hover:shadow-md">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 inline opacity-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m 7.0027808,13.28056 c 0.3781587,0.09097 -1.4858784,0.05887 -1.4858784,0.05887 0,0 0.7349123,2.222575 3.1929439,2.340303 0,0 -1.5233375,1.617877 -5.0730349,1.471608 0,0 3.0127834,2.163711 7.4276076,1.295016 0,0 3.988505,-0.677832 6.136161,-4.532554 0,0 1.384204,-2.088792 1.384204,-5.0320079 0,0 -0.02854,-0.353186 0.338916,-0.6760479 0,0 1.052423,-0.9560994 1.385987,-1.457338 0,0 -1.475176,0.4709145 -1.887226,0.4851847 0,0 1.295015,-1.0595579 1.382419,-1.8693883 0,0 -1.000693,0.5511841 -1.971062,0.7866414 0,0 -0.162323,0.067783 -0.367456,-0.153404 0,0 -0.9561,-1.0880981 -2.811219,-0.8241006 0,0 -2.413437,0.3817262 -2.825487,2.884352 0,0 -0.148053,0.7955604 0.04459,1.266475 0,0 -4.0759091,-0.01427 -7.0779899,-3.590724 0,0 -1.4573381,2.7077591 1.0006936,4.5325536 0,0 -0.4566445,0.146268 -1.4858784,-0.3674564 -0.00178,-0.00357 0.012486,2.7345164 2.6917053,3.3820234 z" />
+          </svg>
         </a>
       </div>
     </div>
