@@ -9,12 +9,12 @@
         <div class="bg-white bg-opacity-20 rounded-full px-2 py-1 text-xs text-gray-300">help-wanted</div>
       </div>
     </a>
-    <div class="rounded-b-3xl shadow-md text-gray-800 relative z-0 -mt-5 pt-5 flex justify-between">
+    <div class="rounded-b-3xl shadow-md text-gray-800 relative z-0 -mt-5 pt-5 flex justify-between overflow-hidden">
       <div class="bg-gray-100 rounded-bl-3xl flex items-center">
         <div class="text-2xl px-3 font-bold whitespace-nowrap">
           0.75 ETH
         </div>
-        <div class="flex items-center h-full bg-white rounded-full">
+        <div class="flex items-center h-full bg-white rounded-full filter drop-shadow-2xl">
           <input type="number" class="w-full h-full pr-0 border-0 rounded-full text-2xl text-right focus:ring-0" placeholder="+0.00" />
           <a href="#" class="text-gray-400 rounded-full p-1 m-1 inline-block hover:text-white hover:bg-indigo-900 hover:shadow-md">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 inline opacity-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
