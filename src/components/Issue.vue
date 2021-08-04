@@ -9,20 +9,22 @@
         <div class="bg-gray-700 rounded-full px-2 py-1 text-xs text-gray-300">help-wanted</div>
       </div>
     </a>
-    <div class="rounded-b-3xl shadow-md text-gray-800 relative z-0 -mt-5 pt-5 flex">
-      <div class="bg-gray-100 rounded-bl-3xl flex items-center">
+    <div class="rounded-b-3xl shadow-md text-gray-800 bg-gray-100 relative z-0 -mt-5 pt-5 flex justify-between">
+      <div class="rounded-bl-3xl flex items-center">
         <div class="text-2xl px-3 font-bold whitespace-nowrap">
           0.75 ETH
         </div>
-        <input type="number" class="w-full h-full border-0 rounded-full text-2xl text-right focus:ring-0" placeholder="+0.00" />
+        <div class="flex items-center h-full bg-white rounded-full">
+          <input type="number" class="w-full h-full pr-0 border-0 rounded-full text-2xl text-right focus:ring-0" placeholder="+0.00" />
+          <a href="#" class="text-gray-400 rounded-full p-1 m-1 inline-block hover:text-white hover:bg-indigo-900 hover:shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 inline opacity-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z" />
+            </svg>
+          </a>
+        </div>
       </div>
-      <div class="p-1 bg-gray-100 rounded-r-3xl flex">
-        <a href="#" class="text-indigo-900 rounded-full p-1 inline-block hover:text-white hover:bg-indigo-900 hover:shadow-md">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 inline opacity-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z" />
-          </svg>
-        </a>
+      <div class="p-1 rounded-r-3xl flex">
         <a href="#" class="text-indigo-900 rounded-full p-1 inline-block hover:text-white hover:bg-indigo-900 hover:shadow-md">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 inline opacity-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />
