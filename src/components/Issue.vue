@@ -1,12 +1,12 @@
 <template>
   <div class="relative bg-gradient-to-r from-gray-100 to-gray-800" style="border-radius: 1.7rem">
-    <a href="https://github.com/mktcode/mktcode/issues/3" target="__blank" class="p-5 rounded-3xl shadow-md bg-gray-800 hover:bg-gray-900 text-white block relative z-10">
-      <div class="text-gray-500">trezor/trezor-firmware</div>
+    <a href="https://github.com/mktcode/mktcode/issues/3" target="__blank" class="p-5 rounded-3xl shadow-md bg-gradient-to-r from-gray-900 to-gray-800 hover:from-indigo-900 hover:to-gray-800 text-white block relative z-10">
+      <div class="text-gray-400">trezor/trezor-firmware</div>
       <h3 class="font-bold text-xl truncate">Adding support of EIP-712 into Ethereum app</h3>
       <div class="flex space-x-2 mt-1">
-        <div class="bg-gray-700 rounded-full px-2 py-1 text-xs text-gray-300">Vue</div>
-        <div class="bg-gray-700 rounded-full px-2 py-1 text-xs text-gray-300">bug</div>
-        <div class="bg-gray-700 rounded-full px-2 py-1 text-xs text-gray-300">help-wanted</div>
+        <div class="bg-white bg-opacity-20 rounded-full px-2 py-1 text-xs text-gray-300">Vue</div>
+        <div class="bg-white bg-opacity-20 rounded-full px-2 py-1 text-xs text-gray-300">bug</div>
+        <div class="bg-white bg-opacity-20 rounded-full px-2 py-1 text-xs text-gray-300">help-wanted</div>
       </div>
     </a>
     <div class="rounded-b-3xl shadow-md text-gray-800 relative z-0 -mt-5 pt-5 flex justify-between">
