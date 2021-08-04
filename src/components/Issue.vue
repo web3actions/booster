@@ -1,6 +1,6 @@
 <template>
   <div class="relative bg-gradient-to-r from-gray-100 to-gray-800" style="border-radius: 1.7rem">
-    <a href="https://github.com/mktcode/mktcode/issues/3" target="__blank" class="p-5 rounded-3xl shadow-md bg-gradient-to-r from-gray-900 to-gray-800 hover:from-indigo-900 hover:to-gray-800 text-white block relative z-10">
+    <a href="https://github.com/mktcode/mktcode/issues/3" target="__blank" class="p-5 rounded-3xl shadow-md bg-gradient-to-r from-gray-900 to-gray-800 hover:from-indigo-1100 hover:to-gray-800 text-white block relative z-10">
       <div class="text-gray-400">trezor/trezor-firmware</div>
       <h3 class="font-bold text-xl truncate">Adding support of EIP-712 into Ethereum app</h3>
       <div class="flex space-x-2 mt-1">

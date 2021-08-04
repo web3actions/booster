@@ -8,6 +8,12 @@ module.exports = {
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
         brand: ['Rajdhani', ...defaultTheme.fontFamily.sans]
+      },
+      colors: {
+        indigo: {
+          1000: '#211f5d',
+          1100: '#151442'
+        },
       }
     },
   },

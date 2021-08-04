@@ -1,5 +1,5 @@
 <template>
-  <div class="px-8 py-5 bg-gradient-to-br from-gray-900 to-gray-700 text-white text-xl">
+  <div class="px-8 py-5 bg-gradient-to-br from-indigo-1100 via-gray-900 to-gray-800 text-white text-xl">
     <div class="container mx-auto ">
       <div class="flex justify-between items-center">
         <h1 class="font-extrabold text-4xl font-brand">
