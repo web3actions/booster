@@ -10,6 +10,11 @@
     <Issue />
     <Issue />
   </div>
+  <div class="text-center mb-10">
+    <button class="text-xl text-gray-800 bg-gray-100 hover:bg-gray-50 px-4 py-2 rounded-3xl font-bold shadow-md">
+      load more
+    </button>
+  </div>
 </template>
 
 <script setup>
