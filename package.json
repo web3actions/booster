@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "ethers": "^5.4.3",
-    "vue": "^3.0.5"
+    "vue": "^3.0.5",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.3.3",
