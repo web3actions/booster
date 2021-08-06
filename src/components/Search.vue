@@ -20,9 +20,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { mapGetters, mapMutations } from '../lib'
 
-const sort = ref('desc')
-
-const toggleSort = () => sort.value = sort.value === 'desc' ? 'asc' : 'desc'
+const { sort } = mapGetters()
+const { toggleSort } = mapMutations()
 </script>

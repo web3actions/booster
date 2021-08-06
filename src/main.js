@@ -6,16 +6,23 @@ import './index.css'
 const store = createStore({
   state () {
     return {
+      sort: 'desc',
       issue: ''
     }
   },
   getters: {
+    sort (state) {
+      return state.sort
+    },
     issue (state) {
       return state.issue
     },
   },
   mutations: {
-    issue (issue) {
+    toggleSort (state) {
+      state.sort = state.sort === 'desc' ? 'asc' : 'desc'
+    },
+    setIssue (state, issue) {
       state.issue = issue
     }
   }
