@@ -1,22 +1,14 @@
 <template>
-  <div class="container mx-auto py-10 px-4 md:px-8 grid gap-4 md:gap-8 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-    <Issue />
-    <Issue />
-    <Issue />
-    <Issue />
-    <Issue />
-    <Issue />
-    <Issue />
-    <Issue />
-    <Issue />
+  <div v-if="issue" class="container max-w-4xl mx-auto py-10 px-4 md:px-8">
+    <Issue :issue="issue" />
   </div>
-  <div class="text-center mb-10">
-    <button class="text-xl text-gray-800 bg-gray-100 hover:bg-gray-50 px-4 py-2 rounded-3xl font-bold shadow-md">
-      load more
-    </button>
-  </div>
+  <IssueList v-else />
 </template>
 
 <script setup>
+import { mapGetters } from '../lib'
 import Issue from './Issue.vue'
+import IssueList from './IssueList.vue'
+
+const { issue } = mapGetters()
 </script>
