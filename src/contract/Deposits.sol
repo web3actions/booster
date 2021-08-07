@@ -43,14 +43,15 @@ contract Deposits {
         return issueWithdrawalRounds[_issueId];
     }
 
-    event DepositEvent(address sender, string issueId, uint256 value, uint256 withdrawalRound);
+    event DepositEvent(uint256 depositId, address sender, string issueId, uint256 value, uint256 withdrawalRound);
     function deposit(string calldata _issueId) public payable {
         issueBalances[_issueId] += msg.value;
         depositsById[nextDepositId] = Deposit(msg.sender, _issueId, msg.value, issueWithdrawalRounds[_issueId]);
         depositsIdsBySender[msg.sender].push(nextDepositId);
-        nextDepositId++;
 
-        emit DepositEvent(msg.sender, _issueId, msg.value, issueWithdrawalRounds[_issueId]);
+        emit DepositEvent(nextDepositId, msg.sender, _issueId, msg.value, issueWithdrawalRounds[_issueId]);
+        
+        nextDepositId++;
     }
     
     event CancelEvent(uint256 depositId);

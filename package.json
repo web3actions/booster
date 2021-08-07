@@ -5,7 +5,10 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "deploy": "push-dir --dir=dist --branch=gh-pages"
+    "deploy": "push-dir --dir=dist --branch=gh-pages",
+    "sg-codegen": "graph codegen -o subgraph",
+    "sg-build": "graph build",
+    "sg-deploy": "graph deploy --node https://api.thegraph.com/deploy/ ethbooster/ethbooster"
   },
   "dependencies": {
     "ethers": "^5.4.3",
@@ -13,6 +16,8 @@
     "vuex": "^4.0.2"
   },
   "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.21.1",
+    "@graphprotocol/graph-ts": "^0.20.1",
     "@tailwindcss/forms": "^0.3.3",
     "@vitejs/plugin-vue": "^1.3.0",
     "@vue/compiler-sfc": "^3.0.5",
