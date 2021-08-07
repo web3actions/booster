@@ -43,13 +43,17 @@ contract Deposits {
         return issueWithdrawalRounds[_issueId];
     }
 
+    event DepositEvent(address sender, string issueId, uint256 value, uint256 withdrawalRound);
     function deposit(string calldata _issueId) public payable {
         issueBalances[_issueId] += msg.value;
         depositsById[nextDepositId] = Deposit(msg.sender, _issueId, msg.value, issueWithdrawalRounds[_issueId]);
         depositsIdsBySender[msg.sender].push(nextDepositId);
         nextDepositId++;
+
+        emit DepositEvent(msg.sender, _issueId, msg.value, issueWithdrawalRounds[_issueId]);
     }
     
+    event CancelEvent(uint256 depositId);
     function cancel(uint256 _depositId) public {
         require(depositsById[_depositId].sender == msg.sender, "Deposit is not yours or does not exist.");
         require(depositsById[_depositId].issueWithdrawalRound == issueWithdrawalRounds[depositsById[_depositId].issueId], "Deposit has already been withdrawn.");
@@ -58,8 +62,11 @@ contract Deposits {
         issueBalances[depositsById[_depositId].issueId] -= value;
         delete depositsById[_depositId];
         payable(msg.sender).transfer(value);
+
+        emit CancelEvent(_depositId);
     }
 
+    event WithdrawEvent(string issueId, address to);
     function withdraw(string calldata _issueId, address _to) public {
         require(msg.sender == owner, "Caller is not owner");
         require(issueBalances[_issueId] > 0, "Issue has no deposits.");
@@ -70,5 +77,7 @@ contract Deposits {
         issueWithdrawalRounds[_issueId]++;
         payable(owner).transfer(fee);
         payable(_to).transfer(value - fee);
+
+        emit WithdrawEvent(_issueId, _to);
     }
 }
