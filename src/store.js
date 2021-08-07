@@ -3,6 +3,7 @@ import { createStore } from 'vuex'
 export default createStore({
   state () {
     return {
+      onlyOwn: false,
       sort: 'desc',
       issue: null,
       issues: [
@@ -26,6 +27,9 @@ export default createStore({
     }
   },
   getters: {
+    onlyOwn (state) {
+      return state.onlyOwn
+    },
     sort (state) {
       return state.sort
     },
@@ -37,6 +41,9 @@ export default createStore({
     },
   },
   mutations: {
+    toggleOnlyOwn (state) {
+      state.onlyOwn = !state.onlyOwn
+    },
     toggleSort (state) {
       state.sort = state.sort === 'desc' ? 'asc' : 'desc'
     },
