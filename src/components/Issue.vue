@@ -68,6 +68,7 @@
 import { ref } from 'vue'
 import { ethers } from 'ethers'
 import Modal from './Modal.vue'
+import ABI from '../contract/abi.json'
 
 const props = defineProps({
   issue: {
@@ -83,10 +84,7 @@ const depositTx = ref(null)
 const ethProvider = new ethers.providers.Web3Provider(window.ethereum)
 const ethSigner = ethProvider.getSigner()
 const contractAddress = '0x29E80Eb524F44459B76A67206eDbBa0880851376'
-const abi = [
-  'function deposit(string) payable'
-]
-const contract = new ethers.Contract(contractAddress, abi, ethProvider)
+const contract = new ethers.Contract(contractAddress, ABI, ethProvider)
 const contractWithSigner = contract.connect(ethSigner)
 
 const waitingForConfirmation = ref(false)
