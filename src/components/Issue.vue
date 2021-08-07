@@ -47,11 +47,27 @@
       </div>
     </div>
   </div>
+  <teleport to="body" v-if="showModal && depositTx">
+    <Modal @close="closeModal">
+      <h1 class="text-3xl font-extrabold mb-5">Deposit Successful!</h1>
+      <p>
+        One more step. You should <a :href="issue.html_url" target="__blank"><u>leave a comment</u></a> to let everyone know about this bounty. Include a link to the transaction for other's to validate your deposit. Here's a template you can copy:
+      </p>
+      <div class="border border-gray-600 rounded-xl p-3 my-3 text-gray-300">
+        Hey! I just deposited {{ amount }} ETH for this issue. Whoever solves it via a merged pull request. Can withdraw the bounty [here](https://github.com/ethbooster/oracle/issues/new?template=withdraw.md&title=Withdraw)<br>
+        <br>
+        As the maintainer, comment "/release-eth @user" to release the bounty manually.<br>
+        <br>
+        You can see the transaction [here](https://kovan.etherscan.io/tx/{{ depositTx.transactionHash }}).
+      </div>
+    </Modal>
+  </teleport>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { ethers } from 'ethers'
+import Modal from './Modal.vue'
 
 const props = defineProps({
   issue: {
@@ -63,6 +79,7 @@ const props = defineProps({
 const bounty = BigInt('750000000000000000')
 
 const amount = ref('')
+const depositTx = ref(null)
 const ethProvider = new ethers.providers.Web3Provider(window.ethereum)
 const ethSigner = ethProvider.getSigner()
 const contractAddress = '0x29E80Eb524F44459B76A67206eDbBa0880851376'
@@ -74,12 +91,14 @@ const contractWithSigner = contract.connect(ethSigner)
 
 const waitingForConfirmation = ref(false)
 const showSuccess = ref(false)
+const showModal = ref(false)
 const deposit = async () => {
+  showModal.value = true
   waitingForConfirmation.value = true
   try {
     await ethProvider.send('eth_requestAccounts', [])
-    const tx = await contractWithSigner.deposit(props.issue.node_id, { value: ethers.utils.parseEther(amount.value.toString()) })
-    await tx.wait()
+    const pendingTx = await contractWithSigner.deposit(props.issue.node_id, { value: ethers.utils.parseEther(amount.value.toString()) })
+    depositTx.value = await pendingTx.wait()
     showSuccess.value = true
     waitingForConfirmation.value = false
     setTimeout(() => showSuccess.value = false, 3000)
@@ -87,5 +106,11 @@ const deposit = async () => {
     console.log(e)
     waitingForConfirmation.value = false
   }
+}
+
+const closeModal = () => {
+  depositTx.value = null
+  amount.value = ''
+  showModal.value = false
 }
 </script>
