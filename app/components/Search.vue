@@ -38,4 +38,9 @@ watchEffect(async () => {
     setIssue(null)
   }
 })
+
+const issueParams = window.location.hash.match(/^#([\w-]+)\/([\w-]+)\/(\d+)$/)
+if (issueParams) {
+  search.value = `https://github.com/${issueParams[1]}/${issueParams[2]}/issues/${issueParams[3]}`
+}
 </script>
