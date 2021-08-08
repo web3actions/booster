@@ -45,13 +45,10 @@
             </div>
           </div>
         </div>
-        <div class="flex space-x-5 md:flex-col md:space-y-5 md:space-x-0 xl:flex-row xl:space-y-0 xl:space-x-5 text-center whitespace-nowrap">
-          <a href="#" class="bg-gray-200 hover:bg-gray-50 text-gray-800 rounded-3xl px-5 py-3 text-2xl font-extrabold shadow-lg">
-            Donate!
-          </a>
-          <a href="#" class="bg-indigo-800 hover:bg-indigo-700 text-gray-200 rounded-3xl px-5 py-3 text-2xl font-extrabold shadow-lg">
-            Read more
-          </a>
+        <div class="w-full max-w-md">
+          <div class="aspect-w-16 aspect-h-9 rounded-3xl overflow-hidden">
+            <iframe src="https://www.youtube-nocookie.com/embed/R8_veQiYBjI" frameborder="0" allowfullscreen></iframe>
+          </div>
         </div>
       </div>
     </div>
