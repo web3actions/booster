@@ -1,5 +1,7 @@
 const ethers = require('ethers')
 const checkWithdrawalEligibility = require('./lib/check-withdrawal-eligibility')
+const cryptoConfig = require('../package.json').crypto
+const ABI = require('../contract/abi.json')
 
 module.exports = async (github, context, rpcNode, walletKey) => {
   // comment request status
@@ -26,7 +28,7 @@ module.exports = async (github, context, rpcNode, walletKey) => {
       // withdraw
       const provider = new ethers.providers.JsonRpcProvider(rpcNode)
       const wallet = new ethers.Wallet(walletKey, provider)
-      const contract = new ethers.Contract('0x94f488ad4CB343460878BA4b5e2Fe632a1a7CaCB', ['function withdraw(string,address)', 'function getIssueBalance(string) view returns(uint256)'], provider)
+      const contract = new ethers.Contract(cryptoConfig.ethereum.contract, ABI, provider)
       const contractWithWallet = contract.connect(wallet)
       const issueBalance = await contractWithWallet.getIssueBalance(issue.data.node_id)
       if (Number(ethers.utils.formatEther(issueBalance))) {
