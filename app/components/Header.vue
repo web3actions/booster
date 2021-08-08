@@ -9,6 +9,14 @@
           </svg>
           <span class="text-indigo-700">eth</span>booster
         </h1>
+        <div class="space-x-5">
+          <a v-if="user" :href="'https://github.com/' + user.login" class="opacity-80 hover:opacity-100">
+            <img :src="user.avatarUrl" class="w-8 h-8 rounded-xl" />
+          </a>
+          <a v-else href="https://github.com/login/oauth/authorize?client_id=0365a5d8c08091191dd0" class="bg-gray-200 hover:bg-gray-50 text-gray-800 rounded-xl px-3 py-2 font-extrabold shadow-lg">
+            connect
+          </a>
+        </div>
       </div>
       <div class="py-8 md:py-14 flex flex-col space-y-8 md:flex-row md:space-y-0 md:space-x-8 justify-between items-center">
         <div>
@@ -49,3 +57,9 @@
     </div>
   </div>
 </template>
+
+<script setup>
+import { mapGetters } from '../lib'
+
+const { user } = mapGetters()
+</script>
