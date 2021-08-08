@@ -1,7 +1,7 @@
 # Each request issue (not to confuse with the issue to withdraw deposits from) triggers exactly one workflow run when it's opened.
 # The issue will be closed in any case. If a workflow fails for whatever reason, a new request issue needs to be created.
 
-name: Jobs
+name: Oracle
 on:
   issues:
     types: [ opened ]
@@ -18,16 +18,4 @@ jobs:
       - uses: actions/github-script@v4
         with:
           github-token: ${{ secrets.PAT }}
-          script: require('./jobs/withdraw.js')(github, context, '${{ secrets.RPC_NODE }}', '${{ secrets.WALLET_KEY }}')
-        
-  # tweet:
-  #   name: Tweet
-  #   runs-on: ubuntu-latest
-  #   if: ${{ contains(github.event.issue.labels.*.name, 'tweet') }}
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/setup-node@v2
-  #     - run: npm ci
-  #     - uses: actions/github-script@v4
-  #       with:
-  #         script: require('./jobs/tweet.js')(github, context)
+          script: require('./oracle/withdraw.js')(github, context, '${{ secrets.RPC_NODE }}', '${{ secrets.WALLET_KEY }}')

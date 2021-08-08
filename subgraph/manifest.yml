@@ -19,7 +19,7 @@ dataSources:
         - WithdrawEvent
       abis:
         - name: Deposits
-          file: ./src/contract/abi.json
+          file: ../contract/abi.json
       eventHandlers:
         - event: DepositEvent(uint256,address,string,uint256,uint256)
           handler: handleDepositEvent
@@ -27,4 +27,4 @@ dataSources:
           handler: handleCancelEvent
         - event: WithdrawEvent(string,address)
           handler: handleWithdrawEvent
-      file: ./src/mapping.ts
+      file: ./mapping.ts

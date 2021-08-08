@@ -68,7 +68,7 @@
 import { ref } from 'vue'
 import { ethers } from 'ethers'
 import Modal from './Modal.vue'
-import ABI from '../contract/abi.json'
+import ABI from '../../contract/abi.json'
 
 const props = defineProps({
   issue: {

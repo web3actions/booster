@@ -1,5 +1,5 @@
-import { CancelEvent, DepositEvent, WithdrawEvent } from "../subgraph/Deposits/Deposits"
-import { Issue, Deposit } from "../subgraph/schema"
+import { CancelEvent, DepositEvent, WithdrawEvent } from "./generated/Deposits/Deposits"
+import { Issue, Deposit } from "./generated/schema"
 
 export function handleDepositEvent(event: DepositEvent): void {
   let issue = Issue.load(event.params.issueId.toString())
