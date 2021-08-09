@@ -21,7 +21,7 @@
           leave-to="scale-90 opacity-0"
         >
           <div @click.stop class="max-w-xl bg-indigo-800 text-white shadow-2xl rounded-3xl p-5 relative">
-            <button @click="$emit('close')" class="absolute top-4 right-4">
+            <button @click="$emit('close')" class="absolute top-4 right-4 z-50 text-white bg-white bg-opacity-10 hover:bg-opacity-100 hover:text-indigo-800 rounded-full p-1">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
