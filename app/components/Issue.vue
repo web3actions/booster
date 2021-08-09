@@ -47,17 +47,28 @@
       </div>
     </div>
   </div>
-  <Modal :show="showModal && depositTx" @close="closeModal">
+  <Modal :show="showModal" @close="closeModal">
     <h1 class="text-3xl font-extrabold mb-5">Deposit Successful!</h1>
     <p>
-      One more step. You should <a :href="issue.html_url" target="__blank"><u>leave a comment</u></a> to let everyone know about this bounty. Include a link to the transaction for other's to validate your deposit. Here's a template you can copy:
+      One more step. The bounty will be listed on this website but you should leave a comment on GitHub as well, to let everyone know, who stubmbles upon the issue there.
     </p>
-    <div class="border border-gray-600 rounded-xl p-3 my-3 text-gray-300">
-      Hey! I just deposited {{ amount }} ETH for this issue. Whoever solves it via a merged pull request. Can withdraw the bounty [here](https://github.com/ethbooster/oracle/issues/new?template=withdraw.md&title=Withdraw)<br>
-      <br>
-      As the maintainer, comment "/release-eth @user" to release the bounty manually.<br>
-      <br>
-      You can see the transaction [here](https://kovan.etherscan.io/tx/{{ depositTx.transactionHash }}).
+    <div class="rounded-xl p-3 my-5 text-white bg-white bg-opacity-10">
+      {{ commentText }}
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+      <button @click="copyCommentText" class="flex-grow text-lg bg-gray-200 hover:bg-gray-50 text-gray-800 rounded-xl px-5 py-2 font-extrabold shadow-lg">
+        Copy Text
+        <i v-if="showCopySuccess" class="fas fa-check text-green-700" />
+        <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+        </svg>
+      </button>
+      <a :href="issue.html_url" target="__blank" class="flex-grow text-center text-lg bg-gray-200 hover:bg-gray-50 text-gray-800 rounded-xl px-5 py-2 font-extrabold shadow-lg">
+        Go to Issue
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      </a>
     </div>
   </Modal>
 </template>
@@ -88,16 +99,21 @@ const contractWithSigner = contract.connect(ethSigner)
 const waitingForConfirmation = ref(false)
 const showSuccess = ref(false)
 const showModal = ref(false)
+const commentText = ref('')
 const deposit = async () => {
-  showModal.value = true
   waitingForConfirmation.value = true
   try {
     await ethProvider.send('eth_requestAccounts', [])
-    const pendingTx = await contractWithSigner.deposit(props.issue.node_id, { value: ethers.utils.parseEther(amount.value.toString()) })
+    const pendingTx = await contractWithSigner.deposit(props.issue.node_id, { value: ethers.utils.parseEther(amount.value) })
     depositTx.value = await pendingTx.wait()
     showSuccess.value = true
     waitingForConfirmation.value = false
-    setTimeout(() => showSuccess.value = false, 3000)
+    commentText.value = `I deposited ${amount.value} ETH for this issue.
+Whoever solves it can withdraw the bounty [here](https://ethbooster.github.io?issue=${encodeURIComponent(props.issue.html_url)}).`
+    setTimeout(() => {
+      showModal.value = true
+      showSuccess.value = false
+    }, 1000)
   } catch (e) {
     console.log(e)
     waitingForConfirmation.value = false
@@ -108,5 +124,13 @@ const closeModal = () => {
   depositTx.value = null
   amount.value = ''
   showModal.value = false
+}
+
+const showCopySuccess = ref(false)
+const copyCommentText = () => {
+  navigator.clipboard.writeText(commentText.value).then(function() {
+    showCopySuccess.value = true
+    setTimeout(() => showCopySuccess.value = false, 1000)
+  })
 }
 </script>
