@@ -1,4 +1,4 @@
-name: Withdraw Form
+name: Withdraw Bounty
 description: Withdraw a bounty for an issue you solved.
 title: Withdraw
 labels: [withdraw]
