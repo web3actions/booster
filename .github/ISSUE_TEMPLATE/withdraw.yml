@@ -1,0 +1,25 @@
+name: Withdraw Form
+description: Withdraw a bounty for an issue you solved.
+title: Withdraw
+labels: [withdraw]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Just fill in the issue URL and an Ethereum address. If you are eligible to withdraw the bounty, it will be sent to you immediately.
+  - type: input
+    id: issue
+    attributes:
+      label: Issue URL
+      description: The URL of the Issue you solved.
+      placeholder: https://github.com/...
+    validations:
+      required: true
+  - type: input
+    id: address
+    attributes:
+      label: Ethereum Address
+      description: The address you want the bounty to be sent to.
+      placeholder: 0x...
+    validations:
+      required: true
