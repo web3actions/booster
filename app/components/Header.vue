@@ -27,9 +27,9 @@
             Low fees, seamless processing.
           </h3>
           <div class="space-x-5 text-xl">
-            <button @click="showCreateBountyModal = true" class="bg-indigo-800 hover:bg-indigo-700 rounded-xl px-5 py-3 font-extrabold shadow-lg">
+            <a @click="showCreateBountyModal = true" class="cursor-pointer bg-indigo-800 hover:bg-indigo-700 rounded-xl px-5 py-3 font-extrabold shadow-lg">
               Create Bounty
-            </button>
+            </a>
             <a href="https://medium.com" target="__blank" class="bg-gray-300 hover:bg-white text-gray-800 rounded-xl px-5 py-3 font-extrabold shadow-lg">
               Read more
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
