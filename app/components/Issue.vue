@@ -47,21 +47,19 @@
       </div>
     </div>
   </div>
-  <teleport to="body" v-if="showModal && depositTx">
-    <Modal @close="closeModal">
-      <h1 class="text-3xl font-extrabold mb-5">Deposit Successful!</h1>
-      <p>
-        One more step. You should <a :href="issue.html_url" target="__blank"><u>leave a comment</u></a> to let everyone know about this bounty. Include a link to the transaction for other's to validate your deposit. Here's a template you can copy:
-      </p>
-      <div class="border border-gray-600 rounded-xl p-3 my-3 text-gray-300">
-        Hey! I just deposited {{ amount }} ETH for this issue. Whoever solves it via a merged pull request. Can withdraw the bounty [here](https://github.com/ethbooster/oracle/issues/new?template=withdraw.md&title=Withdraw)<br>
-        <br>
-        As the maintainer, comment "/release-eth @user" to release the bounty manually.<br>
-        <br>
-        You can see the transaction [here](https://kovan.etherscan.io/tx/{{ depositTx.transactionHash }}).
-      </div>
-    </Modal>
-  </teleport>
+  <Modal :show="showModal && depositTx" @close="closeModal">
+    <h1 class="text-3xl font-extrabold mb-5">Deposit Successful!</h1>
+    <p>
+      One more step. You should <a :href="issue.html_url" target="__blank"><u>leave a comment</u></a> to let everyone know about this bounty. Include a link to the transaction for other's to validate your deposit. Here's a template you can copy:
+    </p>
+    <div class="border border-gray-600 rounded-xl p-3 my-3 text-gray-300">
+      Hey! I just deposited {{ amount }} ETH for this issue. Whoever solves it via a merged pull request. Can withdraw the bounty [here](https://github.com/ethbooster/oracle/issues/new?template=withdraw.md&title=Withdraw)<br>
+      <br>
+      As the maintainer, comment "/release-eth @user" to release the bounty manually.<br>
+      <br>
+      You can see the transaction [here](https://kovan.etherscan.io/tx/{{ depositTx.transactionHash }}).
+    </div>
+  </Modal>
 </template>
 
 <script setup>

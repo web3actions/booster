@@ -27,12 +27,12 @@
             Low fees, seamless processing.
           </h3>
           <div class="space-x-5 text-xl">
-            <button class="bg-indigo-800 hover:bg-indigo-700 rounded-xl px-5 py-3 font-extrabold shadow-lg">
+            <button @click="showCreateBountyModal = true" class="bg-indigo-800 hover:bg-indigo-700 rounded-xl px-5 py-3 font-extrabold shadow-lg">
               Create Bounty
             </button>
-            <button class="bg-gray-300 hover:bg-white text-gray-800 rounded-xl px-5 py-3 font-extrabold shadow-lg">
-              How it works
-            </button>
+            <a href="https://medium.com" target="__blank" class="bg-gray-300 hover:bg-white text-gray-800 rounded-xl px-5 py-3 font-extrabold shadow-lg">
+              Read more
+            </a>
           </div>
         </div>
         <div class="w-full max-w-lg">
@@ -43,10 +43,19 @@
       </div>
     </div>
   </div>
+  <Modal :show="showCreateBountyModal" @close="showCreateBountyModal = false">
+    <h1 class="text-3xl font-extrabold mb-5">Creating a bounty is easy!</h1>
+    <p>
+      Simply paste the link to an issue into the search field.
+    </p>
+  </Modal>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { mapGetters } from '../lib'
+import Modal from './Modal.vue'
 
 const { user } = mapGetters()
+const showCreateBountyModal = ref(false)
 </script>

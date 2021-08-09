@@ -12,6 +12,7 @@
     "sc:abi": "solcjs --abi contract/Deposits.sol && mv contract_Deposits_sol_Deposits.abi contract/abi.json"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.4.0",
     "ethers": "^5.4.3",
     "vue": "^3.0.5",
     "vuex": "^4.0.2"
