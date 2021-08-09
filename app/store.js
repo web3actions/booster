@@ -5,9 +5,11 @@ export default createStore({
     return {
       user: null,
       accessToken: null,
+      search: '',
       onlyOwn: false,
       sort: 'desc',
       issue: null,
+      showIssueModal: false,
       issues: [
         {
           node_id: 'adadad',
@@ -35,6 +37,9 @@ export default createStore({
     accessToken (state) {
       return state.accessToken
     },
+    search (state) {
+      return state.search
+    },
     onlyOwn (state) {
       return state.onlyOwn
     },
@@ -47,10 +52,16 @@ export default createStore({
     issues (state) {
       return state.issues
     },
+    showIssueModal (state) {
+      return state.showIssueModal
+    },
   },
   mutations: {
     setUser (state, user) {
       state.user = user
+    },
+    setSearch (state, search) {
+      state.search = search
     },
     setAccessToken (state, token) {
       state.accessToken = token
@@ -63,6 +74,9 @@ export default createStore({
     },
     setIssue (state, issue) {
       state.issue = issue
+    },
+    setShowIssueModal (state, show) {
+      state.showIssueModal = show
     }
   },
   actions: {
