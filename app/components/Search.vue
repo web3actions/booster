@@ -30,7 +30,7 @@ const store = useStore()
 const { search, sort, onlyOwn } = mapGetters()
 const { setSearch, toggleSort, toggleOnlyOwn, setIssue, setShowIssueModal } = mapMutations()
 watchEffect(async () => {
-  const issueUrl = search.value.match(/^https:\/\/github\.com\/([\w-]+)\/([\w-]+)\/issues\/(\d+)$/)
+  const issueUrl = search.value.match(/^https:\/\/github\.com\/([\w-]+)\/([\w-\.]+)\/issues\/(\d+)$/)
   if (issueUrl) {
     const response = await fetch(`https://api.github.com/repos/${issueUrl[1]}/${issueUrl[2]}/issues/${issueUrl[3]}`)
     setIssue(await response.json())
