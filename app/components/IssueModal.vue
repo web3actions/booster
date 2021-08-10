@@ -28,6 +28,7 @@
               </svg>
             </button>
             <Issue :issue="issue" />
+            <OwnDeposits />
           </div>
         </TransitionChild>
       </div>
@@ -39,6 +40,7 @@
 import { TransitionRoot, TransitionChild } from '@headlessui/vue'
 import { mapGetters, mapMutations } from '../lib'
 import Issue from './Issue.vue'
+import OwnDeposits from './OwnDeposits.vue'
 
 const { issue, showIssueModal } = mapGetters()
 const { setIssue, setSearch, setShowIssueModal } = mapMutations()
