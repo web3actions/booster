@@ -26,12 +26,25 @@
             Fund issues on GitHub with ETH. Your own ones or any you would like to see solved. As a single donor or together with others.
             Low fees, seamless processing.
           </h3>
-          <div class="space-x-5 text-xl">
+          <div class="flex space-x-5 text-xl">
             <a @click="showCreateBountyModal = true" class="cursor-pointer bg-indigo-800 hover:bg-indigo-700 rounded-xl px-5 py-3 font-extrabold shadow-lg">
-              Create Bounty
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z" />
+              </svg>
+              Deposit
             </a>
-            <a href="https://medium.com" target="__blank" class="bg-gray-300 hover:bg-white text-gray-800 rounded-xl px-5 py-3 font-extrabold shadow-lg">
-              Read more
+            <a @click="showCreateBountyModal = true" class="cursor-pointer bg-indigo-800 hover:bg-indigo-700 rounded-xl px-5 py-3 font-extrabold shadow-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />
+              </svg>
+              Withdraw
+            </a>
+            <a href="https://github.com/ethbooster/ethbooster.github.io" target="__blank" class="bg-gray-300 hover:bg-white text-gray-800 rounded-xl px-5 py-3 font-extrabold shadow-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block" viewBox="0 0 24 24" fill="currentColor">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.463 2 11.97c0 4.404 2.865 8.14 6.839 9.458.5.092.682-.216.682-.48 0-.236-.008-.864-.013-1.695-2.782.602-3.369-1.337-3.369-1.337-.454-1.151-1.11-1.458-1.11-1.458-.908-.618.069-.606.069-.606 1.003.07 1.531 1.027 1.531 1.027.892 1.524 2.341 1.084 2.91.828.092-.643.35-1.083.636-1.332-2.22-.251-4.555-1.107-4.555-4.927 0-1.088.39-1.979 1.029-2.675-.103-.252-.446-1.266.098-2.638 0 0 .84-.268 2.75 1.022A9.606 9.606 0 0112 6.82c.85.004 1.705.114 2.504.336 1.909-1.29 2.747-1.022 2.747-1.022.546 1.372.202 2.386.1 2.638.64.696 1.028 1.587 1.028 2.675 0 3.83-2.339 4.673-4.566 4.92.359.307.678.915.678 1.846 0 1.332-.012 2.407-.012 2.734 0 .267.18.577.688.48C19.137 20.107 22 16.373 22 11.969 22 6.463 17.522 2 12 2z"></path>
+              </svg>
+              Readme
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
@@ -48,21 +61,21 @@
   </div>
   <Modal :show="showCreateBountyModal" @close="showCreateBountyModal = false">
     <h1 class="text-3xl font-extrabold mb-5">Creating a bounty is easy!</h1>
-    <p>
-      Simply paste the link to an issue into the search field. When the issue pops up, enter the amount you want to deposit and click on
+    <p class="text-white text-opacity-80">
+      Paste the link to an issue into the search field. When the issue pops up, enter the amount you want to deposit and click on
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z" />
       </svg>.
-    </p>
-    <img src="/create-bounty.gif" class="my-5 rounded-2xl" />
-    <p>
-      It doesn't matter if you are the first or other deposits already exist. The user who solves the issue can withdraw everything at once.
-      <b>You can cancel a deposit at any time.</b> Click on
+      <img src="/create-bounty.gif" class="my-5 rounded-2xl" />
+      Be the first one or raise an existing bounty.
+      <b>You can cancel a deposit at any time</b>, as long as nobody has solved the issue and taken the bounty. Click on
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
       </svg>
-      in the search bar to see only your own bounties. Make sure you are connected to same Ethereum address than the one you made the deposit with.
+      in the search bar, to see only bounties you deposited on. Make sure you are connected to correct Ethereum address.<br>
+      <br>
+      When a bounty has been withdrawn, you can still add a new one, e.g. in case an issue was reopened.
     </p>
     <div class="text-center mt-5">
       <button @click="showCreateBountyModal = false" class="text-lg bg-gray-200 hover:bg-gray-50 text-gray-800 rounded-xl px-5 py-2 font-extrabold shadow-lg">
