@@ -13,19 +13,23 @@ export default createStore({
       issues: [
         {
           node_id: 'adadad',
-          title: 'Setup Subgraph'
+          title: 'Setup Subgraph',
+          bounty: BigInt('1250000000000000000')
         },
         {
           node_id: 'adadad',
-          title: 'Setup Subgraph'
+          title: 'Implement Bot',
+          bounty: BigInt('750000000000000000')
         },
         {
           node_id: 'adadad',
-          title: 'Setup Subgraph'
+          title: 'Search ALL comments when parsing commands',
+          bounty: BigInt('500000000000000000')
         },
         {
           node_id: 'adadad',
-          title: 'Setup Subgraph'
+          title: 'Setup Subgraph',
+          bounty: BigInt('50000000000000000')
         },
       ]
     }
