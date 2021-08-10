@@ -13,7 +13,7 @@
     <div class="rounded-b-3xl shadow-md text-gray-800 relative z-0 -mt-5 pt-5 overflow-hidden">
       <div class="rounded-3xl bg-gray-100 overflow-hidden flex justify-between items-center">
         <div class="text-xl md:text-2xl px-3 font-bold whitespace-nowrap">
-          {{ ethers.utils.formatEther(bounty) }} ETH
+          {{ ethers.utils.formatEther(issue.bounty) }} ETH
         </div>
         <div class="flex items-center h-full bg-white rounded-full filter drop-shadow-2xl">
           <input v-model="amount" type="number" class="w-full max-w-xs h-full pr-0 border-0 rounded-full text-2xl text-right focus:ring-0" placeholder="+0.00" />
@@ -32,8 +32,8 @@
             </svg>
           </span>
         </div>
-        <div v-if="bounty" class="p-1 flex">
-          <a href="https://github.com/ethbooster/oracle/issues/new?labels=withdraw&template=withdraw.md&title=Withdraw&body=https%3A%2F%2Fgithub.com%2Fmktcode%2Fmktcode%2Fissues%2F3%0A0x27711f9c07230632F2EE1A21a967a9AC4729E520" target="__blank" class="text-indigo-900 rounded-full p-1 inline-block hover:text-white hover:bg-indigo-900 hover:shadow-md">
+        <div v-if="issue.bounty" class="p-1 flex">
+          <a href="https://github.com/ethbooster/ethbooster.github.io/issues/new?labels=withdraw&template=withdraw.yml&title=Withdraw Bounty&issue=https://github.com/&address=0x" target="__blank" class="text-indigo-900 rounded-full p-1 inline-block hover:text-white hover:bg-indigo-900 hover:shadow-md">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 inline opacity-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />
             </svg>
@@ -86,8 +86,6 @@ const props = defineProps({
     required: true
   }
 })
-
-const bounty = BigInt('750000000000000000')
 
 const amount = ref('')
 const depositTx = ref(null)

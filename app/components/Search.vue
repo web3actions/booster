@@ -33,7 +33,9 @@ watchEffect(async () => {
   const issueUrl = search.value.match(/^https:\/\/github\.com\/([\w-]+)\/([\w-\.]+)\/issues\/(\d+)$/)
   if (issueUrl) {
     const response = await fetch(`https://api.github.com/repos/${issueUrl[1]}/${issueUrl[2]}/issues/${issueUrl[3]}`)
-    setIssue(await response.json())
+    const issue = await response.json()
+    issue.bounty = BigInt('0')
+    setIssue(issue)
     setShowIssueModal(true)
   }
 })
