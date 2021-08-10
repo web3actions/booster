@@ -1,7 +1,7 @@
 <template>
   <div class="relative bg-gradient-to-r from-gray-100 to-gray-800" style="border-radius: 1.7rem">
     <a href="https://github.com/mktcode/mktcode/issues/3" target="__blank" class="p-5 rounded-3xl shadow-md bg-gradient-to-r from-gray-900 to-gray-800 hover:from-indigo-1100 hover:to-gray-800 text-white block relative z-10">
-      <div class="text-gray-400">trezor/trezor-firmware</div>
+      <div class="text-gray-400">ethbooster/ethbooster</div>
       <h3 class="font-bold text-xl truncate">{{ issue.title }}</h3>
       <div class="flex space-x-2 mt-1">
         <div class="bg-white bg-opacity-20 rounded-full px-2 py-1 text-xs text-gray-300">Vue</div>
