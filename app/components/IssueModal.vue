@@ -38,10 +38,10 @@
 
 <script setup>
 import { TransitionRoot, TransitionChild } from '@headlessui/vue'
-import { mapGetters, mapMutations } from '../lib'
+import { mapState, mapMutations } from '../lib'
 import Issue from './Issue.vue'
 import OwnDeposits from './OwnDeposits.vue'
 
-const { issue, showIssueModal } = mapGetters()
+const { issue, showIssueModal } = mapState()
 const { setIssue, setSearch, setShowIssueModal } = mapMutations()
 </script>

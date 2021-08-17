@@ -5,7 +5,6 @@ export default createStore({
   state () {
     return {
       user: null,
-      accessToken: null,
       ethAddress: null,
       search: '',
       onlyOwn: false,
@@ -36,44 +35,12 @@ export default createStore({
       ]
     }
   },
-  getters: {
-    user (state) {
-      return state.user
-    },
-    accessToken (state) {
-      return state.accessToken
-    },
-    ethAddress (state) {
-      return state.ethAddress
-    },
-    search (state) {
-      return state.search
-    },
-    onlyOwn (state) {
-      return state.onlyOwn
-    },
-    sort (state) {
-      return state.sort
-    },
-    issue (state) {
-      return state.issue
-    },
-    issues (state) {
-      return state.issues
-    },
-    showIssueModal (state) {
-      return state.showIssueModal
-    },
-  },
   mutations: {
     setUser (state, user) {
       state.user = user
     },
     setSearch (state, search) {
       state.search = search
-    },
-    setAccessToken (state, token) {
-      state.accessToken = token
     },
     setEthAddress (state, address) {
       state.ethAddress = address
@@ -92,11 +59,11 @@ export default createStore({
     }
   },
   actions: {
-    loadUser ({ commit, state }) {
+    loadUser ({ commit, state }, accessToken) {
       fetch('https://api.github.com/graphql', {
         method: 'POST',
         headers: {
-          Authorization: 'bearer ' + state.accessToken
+          Authorization: 'bearer ' + accessToken
         },
         body: JSON.stringify({ query: 'query { viewer { login, avatarUrl } }' })
       }).then(res => res.json()).then(res => {

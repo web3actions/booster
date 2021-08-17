@@ -15,8 +15,7 @@ import Footer from './components/Footer.vue'
 const store = useStore()
 const accessToken = localStorage.getItem('accessToken')
 if (accessToken) {
-  store.commit('setAccessToken', accessToken)
-  store.dispatch('loadUser')
+  store.dispatch('loadUser', accessToken)
 }
 
 const urlParams = new URLSearchParams(window.location.search)
@@ -28,8 +27,7 @@ if (code) {
     .then(data => {
       if (data.access_token) {
         localStorage.setItem('accessToken', data.access_token)
-        store.commit('setAccessToken', data.access_token)
-        store.dispatch('loadUser')
+        store.dispatch('loadUser', data.access_token)
       }
     })
 }

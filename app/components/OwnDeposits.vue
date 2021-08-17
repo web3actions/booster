@@ -30,7 +30,7 @@
 
 <script setup>
 import { ethers } from 'ethers'
-import { mapGetters } from '../lib'
+import { mapState } from '../lib'
 
-const { issues } = mapGetters()
+const { issues } = mapState()
 </script>

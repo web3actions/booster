@@ -82,9 +82,9 @@
 
 <script setup>
 import { ref } from 'vue'
-import { mapGetters } from '../lib'
+import { mapState } from '../lib'
 import Modal from './Modal.vue'
 
-const { user } = mapGetters()
+const { user } = mapState()
 const showCreateBountyModal = ref(false)
 </script>

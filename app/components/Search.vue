@@ -24,10 +24,10 @@
 <script setup>
 import { ref, watchEffect } from 'vue'
 import { useStore } from 'vuex'
-import { mapGetters, mapMutations } from '../lib'
+import { mapState, mapMutations } from '../lib'
 
 const store = useStore()
-const { search, sort, onlyOwn } = mapGetters()
+const { search, sort, onlyOwn } = mapState()
 const { setSearch, toggleSort, toggleOnlyOwn, setIssue, setShowIssueModal } = mapMutations()
 watchEffect(async () => {
   const issueUrl = search.value.match(/^https:\/\/github\.com\/([\w-]+)\/([\w-\.]+)\/issues\/(\d+)$/)

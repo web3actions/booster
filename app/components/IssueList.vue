@@ -13,8 +13,8 @@
 </template>
 
 <script setup>
-import { mapGetters } from '../lib'
+import { mapState } from '../lib'
 import Issue from './Issue.vue'
 
-const { issues } = mapGetters()
+const { issues } = mapState()
 </script>
