@@ -1,5 +1,4 @@
 import { createStore } from 'vuex'
-import { ethers } from 'ethers'
 
 export default createStore({
   state () {
@@ -69,13 +68,6 @@ export default createStore({
       }).then(res => res.json()).then(res => {
         commit('setUser', res.data.viewer)
       })
-    },
-    async connectWallet ({ commit }) {
-      const ethProvider = new ethers.providers.Web3Provider(window.ethereum)
-      const ethSigner = ethProvider.getSigner()
-      await ethProvider.send('eth_requestAccounts', [])
-      const address = await ethSigner.getAddress()
-      commit('setEthAddress', address)
     }
   }
 })
