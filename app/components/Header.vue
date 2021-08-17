@@ -69,12 +69,7 @@
       </svg>.
       <img src="/create-bounty.gif" class="my-5 rounded-2xl" />
       Be the first one or raise an existing bounty.
-      <b>You can cancel a deposit at any time</b>, as long as nobody has solved the issue and taken the bounty. Click on
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-      </svg>
-      in the search bar, to see only bounties you deposited on. Make sure you are connected to correct Ethereum address.<br>
-      <br>
+      <b>You can cancel a deposit at any time</b>, as long as nobody has solved the issue and taken the bounty.
       When a bounty has been withdrawn, you can still add a new one, e.g. in case an issue was reopened.
     </p>
     <div class="text-center mt-5">
