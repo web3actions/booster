@@ -1,10 +1,12 @@
 import { createStore } from 'vuex'
+import { ethers } from 'ethers'
 
 export default createStore({
   state () {
     return {
       user: null,
       accessToken: null,
+      ethAddress: null,
       search: '',
       onlyOwn: false,
       sort: 'desc',
@@ -41,6 +43,9 @@ export default createStore({
     accessToken (state) {
       return state.accessToken
     },
+    ethAddress (state) {
+      return state.ethAddress
+    },
     search (state) {
       return state.search
     },
@@ -70,6 +75,9 @@ export default createStore({
     setAccessToken (state, token) {
       state.accessToken = token
     },
+    setEthAddress (state, address) {
+      state.ethAddress = address
+    },
     toggleOnlyOwn (state) {
       state.onlyOwn = !state.onlyOwn
     },
@@ -94,6 +102,13 @@ export default createStore({
       }).then(res => res.json()).then(res => {
         commit('setUser', res.data.viewer)
       })
+    },
+    async connectWallet ({ commit }) {
+      const ethProvider = new ethers.providers.Web3Provider(window.ethereum)
+      const ethSigner = ethProvider.getSigner()
+      await ethProvider.send('eth_requestAccounts', [])
+      const address = await ethSigner.getAddress()
+      commit('setEthAddress', address)
     }
   }
 })
