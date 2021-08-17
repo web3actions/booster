@@ -59,7 +59,7 @@ export default createStore({
     }
   },
   actions: {
-    loadUser ({ commit, state }, accessToken) {
+    loadUser ({ commit }, accessToken) {
       fetch('https://api.github.com/graphql', {
         method: 'POST',
         headers: {
