@@ -13,7 +13,7 @@
     <div class="rounded-b-3xl shadow-md text-gray-800 relative z-0 -mt-5 pt-5 overflow-hidden">
       <div class="rounded-3xl bg-gray-100 overflow-hidden flex justify-between items-center">
         <div class="text-xl md:text-2xl px-3 font-bold whitespace-nowrap">
-          {{ ethers.utils.formatEther(issue.bounty) }} ETH
+          {{ formatEther(issue.bounty) }} ETH
         </div>
         <div class="flex items-center h-full bg-white rounded-full filter drop-shadow-2xl">
           <input v-model="amount" type="number" class="w-full max-w-xs h-full pr-0 border-0 rounded-full text-2xl text-right focus:ring-0" placeholder="+0.00" />
@@ -75,10 +75,8 @@
 
 <script setup>
 import { ref } from 'vue'
-import { ethers } from 'ethers'
 import Modal from './Modal.vue'
-import { crypto } from '../../package.json'
-import ABI from '../../contract/abi.json'
+import { contract, connectWallet, parseEther, formatEther } from '../wallet'
 
 const props = defineProps({
   issue: {
@@ -89,20 +87,16 @@ const props = defineProps({
 
 const amount = ref('')
 const depositTx = ref(null)
-const ethProvider = new ethers.providers.Web3Provider(window.ethereum)
-const ethSigner = ethProvider.getSigner()
-const contract = new ethers.Contract(crypto.ethereum.contract, ABI, ethProvider)
-const contractWithSigner = contract.connect(ethSigner)
-
 const waitingForConfirmation = ref(false)
 const showSuccess = ref(false)
 const showModal = ref(false)
 const commentText = ref('')
+
 const deposit = async () => {
   waitingForConfirmation.value = true
   try {
-    await ethProvider.send('eth_requestAccounts', [])
-    const pendingTx = await contractWithSigner.deposit(props.issue.node_id, { value: ethers.utils.parseEther(amount.value) })
+    await connectWallet()
+    const pendingTx = await contract.deposit(props.issue.node_id, { value: parseEther(amount.value) })
     depositTx.value = await pendingTx.wait()
     showSuccess.value = true
     waitingForConfirmation.value = false
