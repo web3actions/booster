@@ -50,14 +50,19 @@
       </button>
     </div>
   </div>
-  <input
-    v-else-if="user && address"
-    v-model="url"
-    :disabled="loadingIssue"
-    type="text"
-    placeholder="https://github.com/..."
-    :class="[{ 'animate-pulse': loadingIssue }, 'w-full px-5 py-3 text-xl rounded-xl border-0 ring-gray-300 ring-2 focus:ring-indigo-600 focus:ring-4 transition-all']"
-  />
+  <div v-else-if="user && address">
+    <input
+      v-model="url"
+      :disabled="loadingIssue"
+      type="text"
+      placeholder="https://github.com/.../.../issues/1"
+      :class="[{ 'animate-pulse': loadingIssue }, 'w-full px-5 py-3 text-xl rounded-xl border-0 ring-gray-300 ring-2 focus:ring-indigo-600 focus:ring-4 transition-all']"
+    />
+    <div class="text-center text-sm text-gray-300 mt-2 space-x-3">
+      <a href="#" class="hover:text-indigo-700">about</a>
+      <a href="#" class="hover:text-indigo-700">my deposits</a>
+    </div>
+  </div>
   <div class="space-x-3 text-center" v-else>
     <div class="text-lg text-gray-600 font-bold mb-3">Connect:</div>
     <a
