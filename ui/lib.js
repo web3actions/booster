@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import { ethers } from 'ethers'
+import { ethers, BigNumber } from 'ethers'
 import { crypto } from '../package.json'
 import ABI from '../contract/abi.json'
 
@@ -116,14 +116,25 @@ const loadIssue = async (accessToken, owner, repo, number) => {
       })
     }).then(response => response.json())
 
-    loadingIssue.value = false
     issue.value = response.data.repository.issue
+    issue.value.balance = BigNumber.from(0)
   } catch (e) {
     issue.value = null
   }
+
+  try {
+    issue.value.balance = await contract.getIssueBalance(issue.value.id)
+  } catch {
+    issue.value.balance = BigNumber.from(0)
+  }
+
+  loadingIssue.value = false
 }
 
 export {
+  contract,
+  parseEther,
+  formatEther,
   address,
   connectWallet,
   loadAddress,
