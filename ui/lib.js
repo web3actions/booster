@@ -97,6 +97,7 @@ const loadIssue = async (accessToken, owner, repo, number) => {
             issue(number: $number) {
               id
               title
+              number
               closed
               repository {
                 name
