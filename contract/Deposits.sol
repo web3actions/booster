@@ -31,8 +31,13 @@ contract Deposits {
         return depositsIdsBySender[msg.sender];
     }
 
-    function getDepositById(uint256 _depositId) public view returns(address, string memory, uint256) {
-        return (depositsById[_depositId].sender, depositsById[_depositId].issueId, depositsById[_depositId].value);
+    function getDepositById(uint256 _depositId) public view returns(address, string memory, uint256, uint256) {
+        return (
+            depositsById[_depositId].sender,
+            depositsById[_depositId].issueId,
+            depositsById[_depositId].value,
+            depositsById[_depositId].issueWithdrawalRound
+        );
     }
 
     function getIssueBalance(string calldata _issueId) public view returns(uint256) {

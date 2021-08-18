@@ -6,7 +6,7 @@ dataSources:
     name: Deposits
     network: kovan
     source:
-      address: "0x94f488ad4CB343460878BA4b5e2Fe632a1a7CaCB"
+      address: "0x5d7792DbB015A47975218BA9ae5BC0540142730F"
       abi: Deposits
       startBlock: 26648035
     mapping:
