@@ -39,5 +39,14 @@ body:
       placeholder: https://github.com/.../.../issues/123
     validations:
       required: true
+  - type: dropdown
+    id: oraclefee
+    attributes:
+      label: Oracle Fee
+      description: Top up the oracle with a percentage of your bounty.
+      options:
+        - 1 %
+        - 5 %
+        - 10 %
     validations:
       required: true
