@@ -99,6 +99,7 @@ const loadIssue = async (accessToken, owner, repo, number) => {
               title
               number
               closed
+              url
               repository {
                 name
                 owner {
