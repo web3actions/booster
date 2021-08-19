@@ -6,9 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        To withdraw, you need to configure an address in your profile repository.
-        That's a repository with a name that matches your GitHub username. Create this repository if you haven't done so already.
-        Then add a cryptoactions.json file with the following content and fill in your address:
+        To withdraw, you need to configure an address in your profile repository. That's a repository with a name that matches your GitHub username. Create this repository if you haven't done so already. Then add a cryptoactions.json file with the following content and fill in your address:
 
         ```
         {
@@ -30,8 +28,7 @@ body:
         }
         ```
 
-        That's it. Now enter the URL of the issue.
-        If you are eligible to withdraw the bounty, it will be sent to your configured address immediately.
+        That's it. Now enter the URL of the issue. If you are eligible to withdraw the bounty, it will be sent to your configured address immediately.
   - type: input
     id: issue
     attributes:
