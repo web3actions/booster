@@ -6,6 +6,8 @@ body:
   - type: markdown
     attributes:
       value: |
+        ### No address yet?
+        
         To withdraw, you need to configure an address in your profile repository. That's a repository with a name that matches your GitHub username. [Create this repository](https://github.com/new) if you haven't done so already. Then add a cryptoactions.json file with the following content and fill in your address:
 
         ```
