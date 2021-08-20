@@ -15,6 +15,7 @@ export default {
         return {
           address: null,
           deposits: [],
+          depositTx: null,
           accessToken: null,
           user: null,
           issue: null,
@@ -27,6 +28,9 @@ export default {
         },
         setDeposits (state, deposits) {
           state.deposits = deposits
+        },
+        setDepositTx (state, hash) {
+          state.depositTx = hash
         },
         setAccessToken (state, token) {
           state.accessToken = token
@@ -106,18 +110,18 @@ export default {
             return
           }
         },
-        async deposit ({ state, dispatch }, amount) {
+        async deposit ({ state, commit, dispatch }, amount) {
           try {
             const pendingTx = await contract.deposit(state.issue.id, { value: ethers.utils.parseEther(amount) })
             const depositTx = await pendingTx.wait()
-            dispatch(
-              'loadIssue',
-              state.issue.value.repository.owner.login,
-              state.issue.value.repository.name,
-              state.issue.value.number)
-            return depositTx
+            commit('setDepositTx', depositTx.transactionHash)
+            dispatch('loadIssue', {
+              owner: state.issue.repository.owner.login,
+              repo: state.issue.repository.name,
+              number: state.issue.number
+            })
           } catch {
-            return null
+            commit('setDepositTx', null)
           }
         },
         async loadUser ({ state, commit }) {

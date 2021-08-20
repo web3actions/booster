@@ -1,11 +1,11 @@
 <template>
-  <div v-if="store.state.user && store.state.address">
+  <div v-if="store.state.user && store.state.address" class="w-full">
     <div v-if="store.state.showDeposits" class="w-full rounded-xl bg-white border relative overflow-hidden shadow-lg">
-      <button @click="store.commit('setShowDeposits', false)" class="absolute top-3 right-3 rounded-full p-1 bg-white text-opacity-50 hover:text-opacity-90 bg-opacity-10 text-white hover:bg-opacity-20">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
+      <button @click="() => store.commit('setShowDeposits', false)" class="absolute top-3 right-3 rounded-full p-1 bg-white text-opacity-50 hover:text-opacity-90 bg-opacity-10 text-white hover:bg-opacity-20">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
       <div class="bg-gradient-to-r from-indigo-700 to-indigo-600 text-white text-center p-5">
         <div class="text-3xl font-extrabold py-3">
           My Deposits
@@ -48,7 +48,7 @@
             <div class="text-sm text-gray-500">
               {{ store.state.issue.repository.owner.login }}/{{ store.state.issue.repository.name }}/{{ store.state.issue.number }}
             </div>
-            <div class="text-xl text-gray-800">
+            <div class="text-2xl text-gray-800">
               {{ store.state.issue.title }}
             </div>
           </a>
@@ -83,14 +83,42 @@
             Withdraw
         </div>
         </div>
-        <div v-else class="relative m-5">
-          <span class="absolute right-3 top-3 text-gray-400 text-lg">ETH</span>
-          <input
-            v-model="amount"
-            type="text"
-            placeholder="0.0"
-            class="w-full px-5 py-3 mb-3 text-xl rounded-xl border-0 ring-gray-300 ring-2 focus:ring-indigo-600 focus:ring-4 transition-all"
-          />
+        <div v-else class="m-5">
+          <div v-if="store.state.depositTx" class="p-3 bg-green-600 rounded-xl mb-3 text-white relative">
+            <button @click="() => store.commit('setDepositTx', null)" class="absolute top-3 right-3 rounded-full p-1 bg-white text-opacity-50 hover:text-opacity-90 bg-opacity-10 text-white hover:bg-opacity-20">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <div class="font-extrabold mb-3">Deposit successful.</div>
+            Don't forget to share a link to the bounty and comment on the issue back at GitHub.
+            <button class="relative w-full truncate bg-green-700 border border-green-500 hover:bg-green-800 rounded-xl pl-3 pr-10 py-2 mt-3 hover:shadow-md">
+              <span>https://ethbooster.github.io/#/{{ store.state.issue.repository.owner.login }}/{{ store.state.issue.repository.name }}/{{ store.state.issue.number }}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute right-2 top-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+            </button>
+            <div class="mt-3 space-x-3 text-right">
+              <a :href="store.state.issue.url" target="__blank" class="text-green-900 bg-white hover:bg-gray-100 rounded-2xl px-3 py-2 inline-block shadow">
+                <i class="fab fa-github" />
+              </a>
+              <a :href="'https://twitter.com/intent/tweet?text=asd'" target="__blank" class="text-green-900 bg-white hover:bg-gray-100 rounded-2xl px-3 py-2 inline-block shadow">
+                <i class="fab fa-twitter" />
+              </a>
+              <a :href="'https://etherscan.io/tx/' + store.state.depositTx" target="__blank" class="text-green-900 bg-white hover:bg-gray-100 rounded-2xl px-3 py-2 inline-block shadow">
+                View on Etherscan
+              </a>
+            </div>
+          </div>
+          <div class="relative">
+            <span class="absolute right-3 top-3 text-gray-400 text-lg">ETH</span>
+            <input
+              v-model="amount"
+              type="text"
+              placeholder="0.0"
+              class="w-full px-5 py-3 mb-3 text-xl rounded-xl border-0 ring-gray-300 ring-2 focus:ring-indigo-600 focus:ring-4 transition-all"
+            />
+          </div>
           <button
             @click="deposit"
             :disabled="!Number(amount) || waitingForConfirmation"
@@ -143,7 +171,7 @@
     </div>
     <button
       v-else
-      @click="store.dispatch('connectWallet')"
+      @click="() => store.dispatch('connectWallet')"
       class="bg-indigo-700 hover:bg-indigo-900 text-white text-xl font-extrabold rounded-xl px-5 py-3 shadow-md inline-block"
     >
       <div class="text-xs font-normal text-white opacity-50">Connect</div>
@@ -191,12 +219,10 @@ const resetIssue = () => {
 }
 
 const amount = ref('')
-const depositTx = ref(null)
 const waitingForConfirmation = ref(false)
 const deposit = async () => {
   waitingForConfirmation.value = true
-  depositTx.value = await store.dispatch('deposit', amount.value)
-  console.log(depositTx.value)
+  await store.dispatch('deposit', amount.value)
   waitingForConfirmation.value = false
 }
 
