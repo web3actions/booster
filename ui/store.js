@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import { ethers } from 'ethers'
+import { ethers, BigNumber } from 'ethers'
 import { crypto } from '../package.json'
 import ABI from '../contract/abi.json'
 
@@ -25,7 +25,8 @@ export default {
           deposits: [],
           depositTx: null,
           issue: null,
-          showDeposits: false
+          showDeposits: false,
+          ethUsdPrice: BigNumber.from(0)
         }
       },
       mutations: {
@@ -43,12 +44,16 @@ export default {
         },
         setShowDeposits (state, show) {
           state.showDeposits = show
-        }
+        },
+        setEthUsdPrice (state, price) {
+          state.ethUsdPrice = price
+        },
       },
       actions: {
         async loadAddress ({ commit }) {
           try {
-            let address = await ethSigner.getAddress()
+            const address = await ethSigner.getAddress()
+
             commit('setAddress', address)
           } catch {
             commit('setAddress', null)
@@ -120,18 +125,44 @@ export default {
             commit('setDepositTx', null)
           }
         },
-        async loadIssue ({ commit }, variables) {
+        async loadIssue ({ commit }, { owner, repo, number }) {
           try {
-            const response = await fetch(`https://mktcode.uber.space/ethbooster/issue/${variables.owner}/${variables.repo}/${variables.number}`).then(response => response.json())
-            let issue = response.repository.issue
-            issue.balance = await contract.getIssueBalance(issue.id)
-            let ethUsdRate = await pricefeedContract.latestRoundData()
-            issue.balanceUsd = ethUsdRate.answer * issue.balance / Math.pow(10, 26)
+            const githubResponse = await fetch(`https://mktcode.uber.space/ethbooster/issue/${owner}/${repo}/${number}`).then(response => response.json())
+            let issue = githubResponse.repository.issue
+
+            const query = `query ($issueId:ID!) {
+              issue (id: $issueId) {
+                withdrawalRound
+                id
+                deposits {
+                  id
+                  value
+                }
+              }
+            }`
+            const variables = { issueId: issue.id }
+            const subgraphResponse = await fetch(SUBGRAPH_ENDPOINT, {
+              method: 'POST',
+              body: JSON.stringify({ query, variables })
+            }).then(res => res.json())
+            issue.deposits = subgraphResponse.data.issue.deposits
+            issue.withdrawalRound = subgraphResponse.data.issue.withdrawalRound
             commit('setIssue', issue)
           } catch (e) {
+            console.log(e)
             commit('setIssue', null)
           }
         },
+        async loadEthUsdPrice ({ state, commit }) {
+          if (state.address) {
+            try {
+              let ethUsdRate = await pricefeedContract.latestRoundData()
+              commit('setEthUsdPrice', ethUsdRate.answer)
+            } catch {
+              commit('setEthUsdPrice', BigNumber.from(0))
+            }
+          }
+        }
       }
     })
   }
