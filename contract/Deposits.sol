@@ -72,7 +72,7 @@ contract Deposits {
         emit CancelEvent(_depositId);
     }
 
-    event WithdrawEvent(string issueId, address to);
+    event WithdrawEvent(string issueId, address to, uint256 withdrawalRound);
     function withdraw(string calldata _issueId, address _to) public {
         require(msg.sender == owner, "Caller is not owner");
         require(issueBalances[_issueId] > 0, "Issue has no deposits.");
@@ -84,6 +84,6 @@ contract Deposits {
         payable(owner).transfer(fee);
         payable(_to).transfer(value - fee);
 
-        emit WithdrawEvent(_issueId, _to);
+        emit WithdrawEvent(_issueId, _to, issueWithdrawalRounds[_issueId]);
     }
 }

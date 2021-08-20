@@ -82,17 +82,23 @@ export class WithdrawEvent__Params {
   get to(): Address {
     return this._event.parameters[1].value.toAddress();
   }
+
+  get withdrawalRound(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
 }
 
 export class Deposits__getDepositByIdResult {
   value0: Address;
   value1: string;
   value2: BigInt;
+  value3: BigInt;
 
-  constructor(value0: Address, value1: string, value2: BigInt) {
+  constructor(value0: Address, value1: string, value2: BigInt, value3: BigInt) {
     this.value0 = value0;
     this.value1 = value1;
     this.value2 = value2;
+    this.value3 = value3;
   }
 
   toMap(): TypedMap<string, ethereum.Value> {
@@ -100,6 +106,7 @@ export class Deposits__getDepositByIdResult {
     map.set("value0", ethereum.Value.fromAddress(this.value0));
     map.set("value1", ethereum.Value.fromString(this.value1));
     map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
+    map.set("value3", ethereum.Value.fromUnsignedBigInt(this.value3));
     return map;
   }
 }
@@ -112,14 +119,15 @@ export class Deposits extends ethereum.SmartContract {
   getDepositById(_depositId: BigInt): Deposits__getDepositByIdResult {
     let result = super.call(
       "getDepositById",
-      "getDepositById(uint256):(address,string,uint256)",
+      "getDepositById(uint256):(address,string,uint256,uint256)",
       [ethereum.Value.fromUnsignedBigInt(_depositId)]
     );
 
     return new Deposits__getDepositByIdResult(
       result[0].toAddress(),
       result[1].toString(),
-      result[2].toBigInt()
+      result[2].toBigInt(),
+      result[3].toBigInt()
     );
   }
 
@@ -128,7 +136,7 @@ export class Deposits extends ethereum.SmartContract {
   ): ethereum.CallResult<Deposits__getDepositByIdResult> {
     let result = super.tryCall(
       "getDepositById",
-      "getDepositById(uint256):(address,string,uint256)",
+      "getDepositById(uint256):(address,string,uint256,uint256)",
       [ethereum.Value.fromUnsignedBigInt(_depositId)]
     );
     if (result.reverted) {
@@ -139,7 +147,8 @@ export class Deposits extends ethereum.SmartContract {
       new Deposits__getDepositByIdResult(
         value[0].toAddress(),
         value[1].toString(),
-        value[2].toBigInt()
+        value[2].toBigInt(),
+        value[3].toBigInt()
       )
     );
   }

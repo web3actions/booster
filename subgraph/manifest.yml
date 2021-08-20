@@ -25,6 +25,6 @@ dataSources:
           handler: handleDepositEvent
         - event: CancelEvent(uint256)
           handler: handleCancelEvent
-        - event: WithdrawEvent(string,address)
+        - event: WithdrawEvent(string,address,uint256)
           handler: handleWithdrawEvent
       file: ./mapping.ts
