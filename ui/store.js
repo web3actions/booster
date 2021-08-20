@@ -23,8 +23,6 @@ export default {
           address: null,
           deposits: [],
           depositTx: null,
-          accessToken: null,
-          user: null,
           issue: null,
           showDeposits: false
         }
@@ -38,12 +36,6 @@ export default {
         },
         setDepositTx (state, hash) {
           state.depositTx = hash
-        },
-        setAccessToken (state, token) {
-          state.accessToken = token
-        },
-        setUser (state, user) {
-          state.user = user
         },
         setIssue (state, issue) {
           state.issue = issue
@@ -71,9 +63,7 @@ export default {
             commit('setDeposits', [])
           }
         },
-        async loadDeposits ({ state, commit }) {
-          if (!state.accessToken) return
-    
+        async loadDeposits ({ commit }) {
           try {
             const depositIds = await contract.getDepositIdsBySender()
             const filteredDeposits = []
@@ -87,17 +77,8 @@ export default {
               }
     
               if (deposit.value != 0) {
-                const issueResponse = await fetch('https://api.github.com/graphql', {
-                  method: 'POST',
-                  headers: {
-                    Authorization: 'bearer ' + state.accessToken
-                  },
-                  body: JSON.stringify({
-                    query: `query ($issueId: ID!) { node(id: $issueId) { ... on Issue { url title number repository { name owner { login }}}}}`,
-                    variables: { issueId: deposit.issueId }
-                  })
-                }).then(response => response.json())
-                deposit.issue = issueResponse.data.node
+                const issueResponse = await fetch('https://mktcode.uber.space/ethbooster/issue/' + deposit.issueId).then(response => response.json())
+                deposit.issue = issueResponse.node
                 deposit.issueWithdrawalRound = await contract.getIssueWithdrawalRound(deposit.issueId)
                 filteredDeposits.push(deposit)
               }
@@ -131,81 +112,10 @@ export default {
             commit('setDepositTx', null)
           }
         },
-        async loadUser ({ state, commit }) {
-          if (!state.accessToken) return
-    
+        async loadIssue ({ commit }, variables) {
           try {
-            const response = await fetch('https://api.github.com/graphql', {
-              method: 'POST',
-              headers: {
-                Authorization: 'bearer ' + state.accessToken
-              },
-              body: JSON.stringify({ query: 'query { viewer { login, avatarUrl } }' })
-            }).then(response => response.json())
-        
-            commit('setUser', response.data.viewer)
-          } catch (e) {
-            commit('setUser', null)
-          }
-        },
-        async loadAccessToken ({ commit, dispatch }) {
-          commit('setAccessToken', localStorage.getItem('accessToken'))
-          try {
-            const code = (new URLSearchParams(window.location.search)).get('code')
-            if (code) {
-              window.history.replaceState({}, document.title, window.location.origin)
-              const data = await fetch('https://mktcode.uber.space/github-oauth?app=ethbooster&code=' + code).then(response => response.json())
-              if (data.access_token) {
-                localStorage.setItem('accessToken', data.access_token)
-                commit('setAccessToken', data.access_token)
-              }
-            }
-          } catch {
-            dispatch('revokeAccessToken')
-          }
-        },
-        revokeAccessToken ({ commit }) {
-          localStorage.removeItem('accessToken')
-          commit('setAccessToken', null)
-          commit('setUser', null)
-        },
-        async loadIssue ({ state, commit }, variables) {
-          if (!state.accessToken) return
-        
-          try {
-            const response = await fetch('https://api.github.com/graphql', {
-              method: 'POST',
-              headers: {
-                Authorization: 'bearer ' + state.accessToken
-              },
-              body: JSON.stringify({
-                query: `query($owner: String!, $repo: String!, $number: Int!) {
-                  repository(owner: $owner, name: $repo) {
-                    issue(number: $number) {
-                      id
-                      title
-                      number
-                      closed
-                      url
-                      repository {
-                        name
-                        owner {
-                          login
-                        }
-                      }
-                      author {
-                        ... on User {
-                          login
-                        }
-                      }
-                    }
-                  }
-                }`,
-                variables
-              })
-            }).then(response => response.json())
-    
-            let issue = response.data.repository.issue
+            const response = await fetch(`https://mktcode.uber.space/ethbooster/issue/${variables.owner}/${variables.repo}/${variables.number}`).then(response => response.json())
+            let issue = response.repository.issue
             issue.balance = await contract.getIssueBalance(issue.id)
             let ethUsdRate = await pricefeedContract.latestRoundData()
             issue.balanceUsd = ethUsdRate.answer * issue.balance / Math.pow(10, 26)

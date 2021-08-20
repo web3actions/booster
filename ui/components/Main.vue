@@ -1,5 +1,5 @@
 <template>
-  <div v-if="store.state.user && store.state.address" class="w-full">
+  <div v-if="store.state.address" class="w-full">
     <div v-if="store.state.showDeposits" class="w-full rounded-xl bg-white border relative overflow-hidden shadow-lg">
       <button @click="() => store.commit('setShowDeposits', false)" class="absolute top-3 right-3 rounded-full p-1 bg-white text-opacity-50 hover:text-opacity-90 bg-opacity-10 text-white hover:bg-opacity-20">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -143,34 +143,8 @@
     />
     <Subnav />
   </div>
-  <div class="space-x-3 text-center" v-else>
-    <div
-      v-if="store.state.user"
-      class="border text-xl font-extrabold rounded-xl px-5 py-3 inline-block"
-    >
-      <div class="text-xs font-normal opacity-50">Connect</div>
-      <div>GitHub</div>
-      <i class="fas fa-check text-4xl mt-2 text-green-600"></i>
-    </div>
-    <a
-      v-else
-      href="https://github.com/login/oauth/authorize?client_id=0365a5d8c08091191dd0"
-      class="bg-indigo-700 hover:bg-indigo-900 text-white text-xl font-extrabold rounded-xl px-5 py-3 shadow-md inline-block"
-    >
-      <div class="text-xs font-normal text-white opacity-50">Connect</div>
-      <div>GitHub</div>
-      <i class="fab fa-github text-4xl mt-2"></i>
-    </a>
-    <div
-      v-if="store.state.address"
-      class="border text-xl font-extrabold rounded-xl px-5 py-3 inline-block"
-    >
-      <div class="text-xs font-normal opacity-50">Connect</div>
-      <div>Wallet</div>
-      <i class="fas fa-check text-4xl mt-2 text-green-600"></i>
-    </div>
+  <div class="text-center" v-else>
     <button
-      v-else
       @click="() => store.dispatch('connectWallet')"
       class="bg-indigo-700 hover:bg-indigo-900 text-white text-xl font-extrabold rounded-xl px-5 py-3 shadow-md inline-block"
     >
@@ -189,8 +163,6 @@ import Deposit from './Deposit.vue'
 import Subnav from './Subnav.vue'
 
 const store = useStore()
-await store.dispatch('loadAccessToken')
-await store.dispatch('loadUser')
 await store.dispatch('loadAddress')
 await store.dispatch('loadDeposits')
 
