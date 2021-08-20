@@ -40,7 +40,7 @@
             {{ ethers.utils.formatEther(store.state.issue.balance) }} ETH
           </div>
           <div class="text-2xl text-white opacity-30 font-extrabold">
-            $150.00
+            ${{ store.state.issue.balanceUsd.toFixed(2) }}
           </div>
         </div>
         <div class="p-5 text-center">
