@@ -9,6 +9,7 @@ export default {
     const ethSigner = ethProvider.getSigner()
     const bareContract = new ethers.Contract(crypto.ethereum.contract, ABI, ethProvider)
     const contract = bareContract.connect(ethSigner)
+    const SUBGRAPH_ENDPOINT = 'https://api.thegraph.com/subgraphs/name/ethbooster/ethbooster'
     
     const barePricefeedContract = new ethers.Contract(
       '0x9326BFA02ADD2366b30bacB125260Af641031331',
@@ -63,29 +64,36 @@ export default {
             commit('setDeposits', [])
           }
         },
-        async loadDeposits ({ commit }) {
+        async loadDeposits ({ state, commit }) {
           try {
-            const depositIds = await contract.getDepositIdsBySender()
-            const filteredDeposits = []
-            for (let i = 0; i < depositIds.length; i++) {
-              const depositRaw = await contract.getDepositById(depositIds[i])
-              const deposit = {
-                id: depositIds[i],
-                issueId: depositRaw[1],
-                value: depositRaw[2],
-                withdrawalRound: depositRaw[3],
+            const query = `query ($address:ID!) {
+              sender(id: $address) {
+                id
+                deposits {
+                  id
+                  value
+                  issue {
+                    id
+                    withdrawalRound
+                  }
+                }
               }
-    
-              if (deposit.value != 0) {
-                const issueResponse = await fetch('https://mktcode.uber.space/ethbooster/issue/' + deposit.issueId).then(response => response.json())
-                deposit.issue = issueResponse.node
-                deposit.issueWithdrawalRound = await contract.getIssueWithdrawalRound(deposit.issueId)
-                filteredDeposits.push(deposit)
-              }
+            }`
+            const variables = { address: state.address.toLowerCase() }
+            const response = await fetch(SUBGRAPH_ENDPOINT, {
+              method: 'POST',
+              body: JSON.stringify({ query, variables })
+            }).then(res => res.json())
+            const deposits = response.data.sender.deposits
+
+            for (let i = 0; i < deposits.length; i++) {
+              const issueResponse = await fetch('https://mktcode.uber.space/ethbooster/issue/' + deposits[i].issue.id).then(response => response.json())
+              deposits[i].issue = issueResponse.node
+              deposits[i].issue.withdrawalRound = await contract.getIssueWithdrawalRound(deposits[i].issue.id)
             }
     
-            commit('setDeposits', filteredDeposits)
-          } catch {
+            commit('setDeposits', deposits)
+          } catch (e) {
             commit('setDeposits', [])
           }
         },
