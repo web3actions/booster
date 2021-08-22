@@ -173,6 +173,12 @@ watchEffect(async () => {
   }
 })
 
+// get issue params from url
+const urlParams = window.location.hash.match(/^#([\w-]+)\/([\w-\.]+)\/(\d+)$/)
+if (urlParams) {
+  url.value = `https://github.com/${urlParams[1]}/${urlParams[2]}/issues/${urlParams[3]}`
+}
+
 const resetIssue = () => {
   store.commit('setIssue', null)
   url.value = ''
