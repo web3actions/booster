@@ -68,7 +68,7 @@
       </div>
       <div v-if="store.state.issue.closed" class="p-5">
         <a
-          v-if="store.state.issue.balance != 0"
+          v-if="issueBalance != 0"
           :href="getWithdrawLink(store.state.issue)"
           target="__blank"
           class="w-full inline-block text-center bg-indigo-700 hover:bg-indigo-900 text-white text-xl font-extrabold rounded-xl px-5 py-3 shadow-md"
