@@ -38,7 +38,7 @@
         <div class="text-3xl font-extrabold">
           {{ ethers.utils.formatEther(issueBalance) }} ETH
         </div>
-        <div v-if="issueBalanceUsd" class="text-2xl text-white opacity-30 font-extrabold">
+        <div class="text-2xl text-white opacity-30 font-extrabold">
           ${{ issueBalanceUsd.toFixed(2) }}
         </div>
       </div>
@@ -205,6 +205,7 @@ const issueBalanceUsd = computed(() => {
   return null
 })
 
+store.dispatch('loadEthUsdPrice')
 setInterval(() => {
   store.dispatch('loadEthUsdPrice')
 }, 10000)

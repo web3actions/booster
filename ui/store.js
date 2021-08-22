@@ -154,13 +154,27 @@ export default {
           }
         },
         async loadEthUsdPrice ({ state, commit }) {
-          if (state.address) {
-            try {
-              let ethUsdRate = await pricefeedContract.latestRoundData()
-              commit('setEthUsdPrice', ethUsdRate.answer)
-            } catch {
-              commit('setEthUsdPrice', BigNumber.from(0))
-            }
+          try {
+            const query = `query {
+              feed(id: "0x37bc7498f4ff12c19678ee8fe19d713b87f6a9e6") {
+                latestRound: rounds(
+                  where: { value_not: null }
+                  first: 1
+                  orderBy: unixTimestamp
+                  orderDirection: desc
+                ) {
+                  value
+                }
+              }
+            }`
+            const subgraphResponse = await fetch('https://gql.graph.chain.link/subgraphs/name/ethereum-mainnet', {
+              method: 'POST',
+              body: JSON.stringify({ query })
+            }).then(res => res.json())
+            
+            commit('setEthUsdPrice', BigNumber.from(subgraphResponse.data.feed.latestRound[0].value))
+          } catch {
+            commit('setEthUsdPrice', BigNumber.from(0))
           }
         }
       }
