@@ -129,6 +129,8 @@ export default {
           try {
             const githubResponse = await fetch(`https://mktcode.uber.space/ethbooster/issue/${owner}/${repo}/${number}`).then(response => response.json())
             let issue = githubResponse.repository.issue
+            issue.deposits = []
+            issue.withdrawalRound = 0
 
             const query = `query ($issueId:ID!) {
               issue (id: $issueId) {
@@ -145,8 +147,10 @@ export default {
               method: 'POST',
               body: JSON.stringify({ query, variables })
             }).then(res => res.json())
-            issue.deposits = subgraphResponse.data.issue.deposits
-            issue.withdrawalRound = subgraphResponse.data.issue.withdrawalRound
+            if (subgraphResponse.data.issue) {
+              issue.deposits = subgraphResponse.data.issue.deposits
+              issue.withdrawalRound = subgraphResponse.data.issue.withdrawalRound
+            }
             commit('setIssue', issue)
           } catch (e) {
             console.log(e)
@@ -171,7 +175,7 @@ export default {
               method: 'POST',
               body: JSON.stringify({ query })
             }).then(res => res.json())
-            
+
             commit('setEthUsdPrice', BigNumber.from(subgraphResponse.data.feed.latestRound[0].value))
           } catch {
             commit('setEthUsdPrice', BigNumber.from(0))
