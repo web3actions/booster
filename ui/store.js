@@ -157,7 +157,7 @@ export default {
             commit('setIssue', null)
           }
         },
-        async loadEthUsdPrice ({ state, commit }) {
+        async loadEthUsdPrice ({ commit }) {
           try {
             const query = `query {
               feed(id: "0x37bc7498f4ff12c19678ee8fe19d713b87f6a9e6") {
