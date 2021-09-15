@@ -2,10 +2,6 @@
   "name": "ethbooster.github.io",
   "version": "0.0.0",
   "scripts": {
-    "app:dev": "vite app",
-    "app:build": "vite build app",
-    "app:serve": "vite preview app",
-    "app:deploy": "push-dir --dir=app/dist --branch=gh-pages",
     "ui:dev": "vite ui",
     "ui:build": "vite build ui",
     "ui:serve": "vite preview ui",
