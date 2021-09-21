@@ -26,6 +26,6 @@ jobs:
           rpc-node: ${{ secrets.RPC_NODE }}
           contract: ${{ env.CONTRACT }}
           function: "getIssueBalance(string) returns(uint256)"
-          inputs: "['${{ fromJSON(github.event.issue.body).issueId }}']"
+          inputs: '["${{ fromJSON(github.event.issue.body).issueId }}"]'
 
       - run: echo "${{ steps.balance.outputs.result }}"
