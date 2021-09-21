@@ -1,0 +1,42 @@
+name: Withdrawal
+on:
+  issues:
+    types: [ opened ]
+
+env:
+  CONTRACT: "0x94D1ca098e6B7eDDeC454D4EBE439646BF7238DD"
+
+jobs:
+  consecutiveness:
+    runs-on: ubuntu-latest
+    if: ${{ contains(github.event.issue.labels.*.name, 'withdraw') }}
+    steps:
+    - uses: mktcode/consecutive-workflow-action@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+  withdrawal:
+    name: Withdrawal
+    needs: [ consecutiveness ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v4
+        id: issue
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issueUrlMatch = fromJSON(github.event.issue.body).issueUrl.match(/^https:\/\/github\.com\/([\w-]+)\/([\w-]+)\/issues\/(\d+)$/)
+            const issue = await github.issues.get({ issueUrlMatch[1], issueUrlMatch[2], issueUrlMatch[3] })
+            return JSON.stringify(issue)
+
+      - run: echo "${{ steps.issue.outputs.result }}"
+
+      - uses: cryptoactions/tx@8ba603b9d689b9dfefd3f7d95ec3d4443443c067
+        id: balance
+        with:
+          rpc-node: ${{ secrets.RPC_NODE }}
+          contract: ${{ env.CONTRACT }}
+          function: "getIssueBalance(string) returns(uint256)"
+          inputs: "['${{ fromJSON(needs.issue.outputs.result).node_id }}']"
+
+      - run: echo "${{ steps.balance.outputs.result }}"
