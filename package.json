@@ -30,11 +30,5 @@
     "solc": "^0.8.6",
     "tailwindcss": "^2.2.7",
     "vite": "^2.4.4"
-  },
-  "crypto": {
-    "ethereum": {
-      "address": "0x0cE5CD28e4CD4b3a4def3c9eE461809b2c5ee9E6",
-      "contract": "0x5d7792DbB015A47975218BA9ae5BC0540142730F"
-    }
   }
 }
