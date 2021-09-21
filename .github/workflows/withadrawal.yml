@@ -20,17 +20,6 @@ jobs:
     needs: [ consecutiveness ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v4
-        id: issue
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const issueUrlMatch = fromJSON(github.event.issue.body).issueUrl.match(/^https:\/\/github\.com\/([\w-]+)\/([\w-]+)\/issues\/(\d+)$/)
-            const issue = await github.issues.get({ issueUrlMatch[1], issueUrlMatch[2], issueUrlMatch[3] })
-            return JSON.stringify(issue)
-
-      - run: echo "${{ steps.issue.outputs.result }}"
-
       - uses: cryptoactions/tx@8ba603b9d689b9dfefd3f7d95ec3d4443443c067
         id: balance
         with:
