@@ -10,7 +10,7 @@ env:
 jobs:
   consecutiveness:
     runs-on: ubuntu-latest
-    if: ${{ contains(github.event.issue.labels.*.name, 'withdraw') }}
+    # if: ${{ contains(github.event.issue.labels.*.name, 'withdraw') }}
     steps:
     - uses: mktcode/consecutive-workflow-action@v1
       with:
