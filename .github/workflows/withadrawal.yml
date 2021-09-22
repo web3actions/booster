@@ -1,5 +1,6 @@
 name: Withdrawal
 on:
+  workflow_dispatch:
   issues:
     types: [ opened ]
 
@@ -20,12 +21,17 @@ jobs:
     needs: [ consecutiveness ]
     runs-on: ubuntu-latest
     steps:
-      - uses: cryptoactions/tx@b6d1c0b8a3fd1267e61af9e5f66bf3848357cc60
-        id: balance
-        with:
-          rpc-node: ${{ secrets.RPC_NODE }}
-          contract: ${{ env.CONTRACT }}
-          function: "getIssueBalance(string) returns(uint256)"
-          inputs: '["${{ fromJSON(github.event.issue.body).issueId }}"]'
+      # - name: Get Issue Balance
+      #   uses: cryptoactions/tx@b6d1c0b8a3fd1267e61af9e5f66bf3848357cc60
+      #   id: balance
+      #   with:
+      #     rpc-node: ${{ secrets.RPC_NODE }}
+      #     contract: ${{ env.CONTRACT }}
+      #     function: "getIssueBalance(string) returns(uint256)"
+      #     inputs: '["${{ fromJSON(github.event.issue.body).issueId }}"]'
 
-      - run: echo "${{ steps.balance.outputs.result }}"
+      - name: Test
+        uses: actions/github-script@v4
+        with:
+          script: |
+            console.log(github, context)
