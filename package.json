@@ -8,8 +8,7 @@
     "ui:deploy": "push-dir --dir=ui/dist --branch=gh-pages",
     "sg:codegen": "graph codegen -o subgraph/generated subgraph/manifest.yml",
     "sg:build": "graph build -o subgraph/build subgraph/manifest.yml",
-    "sg:deploy": "graph deploy --node https://api.thegraph.com/deploy/ ethbooster/ethbooster subgraph/manifest.yml",
-    "sc:abi": "solcjs --abi contract/Deposits.sol && mv contract_Deposits_sol_Deposits.abi contract/abi.json"
+    "sg:deploy": "graph deploy --node https://api.thegraph.com/deploy/ ethbooster/ethbooster subgraph/manifest.yml"
   },
   "dependencies": {
     "@headlessui/vue": "^1.4.0",
