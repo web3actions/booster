@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ui:dev": "vite ui",
-    "ui:build": "vite build ui",
+    "ui:build": "vite build ui --base=/booster/",
     "ui:serve": "vite preview ui",
     "ui:deploy": "push-dir --dir=ui/dist --branch=gh-pages",
     "sg:codegen": "graph codegen -o subgraph/generated subgraph/manifest.yml",
