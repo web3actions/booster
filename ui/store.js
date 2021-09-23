@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 import { ethers, BigNumber } from 'ethers'
-import ABI from '../contract/abi.json'
+import CONTRACT from '../build/contracts/Deposits.json'
 
 const contractAddress = '0x94D1ca098e6B7eDDeC454D4EBE439646BF7238DD'
 
@@ -8,7 +8,7 @@ export default {
   init: () => {
     const ethProvider = new ethers.providers.Web3Provider(window.ethereum)
     const ethSigner = ethProvider.getSigner()
-    const bareContract = new ethers.Contract(contractAddress, ABI, ethProvider)
+    const bareContract = new ethers.Contract(contractAddress, CONTRACT.abi, ethProvider)
     const contract = bareContract.connect(ethSigner)
     const SUBGRAPH_ENDPOINT = 'https://api.thegraph.com/subgraphs/name/ethbooster/ethbooster'
     
