@@ -116,6 +116,29 @@ export class Deposits extends ethereum.SmartContract {
     return new Deposits("Deposits", address);
   }
 
+  getDepositIdsBySender(): Array<BigInt> {
+    let result = super.call(
+      "getDepositIdsBySender",
+      "getDepositIdsBySender():(uint256[])",
+      []
+    );
+
+    return result[0].toBigIntArray();
+  }
+
+  try_getDepositIdsBySender(): ethereum.CallResult<Array<BigInt>> {
+    let result = super.tryCall(
+      "getDepositIdsBySender",
+      "getDepositIdsBySender():(uint256[])",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigIntArray());
+  }
+
   getDepositById(_depositId: BigInt): Deposits__getDepositByIdResult {
     let result = super.call(
       "getDepositById",
@@ -151,29 +174,6 @@ export class Deposits extends ethereum.SmartContract {
         value[3].toBigInt()
       )
     );
-  }
-
-  getDepositIdsBySender(): Array<BigInt> {
-    let result = super.call(
-      "getDepositIdsBySender",
-      "getDepositIdsBySender():(uint256[])",
-      []
-    );
-
-    return result[0].toBigIntArray();
-  }
-
-  try_getDepositIdsBySender(): ethereum.CallResult<Array<BigInt>> {
-    let result = super.tryCall(
-      "getDepositIdsBySender",
-      "getDepositIdsBySender():(uint256[])",
-      []
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigIntArray());
   }
 
   getIssueBalance(_issueId: string): BigInt {
@@ -239,72 +239,20 @@ export class ConstructorCall__Inputs {
   constructor(call: ConstructorCall) {
     this._call = call;
   }
+
+  get _hash(): string {
+    return this._call.inputValues[0].value.toString();
+  }
+
+  get _signer(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
 }
 
 export class ConstructorCall__Outputs {
   _call: ConstructorCall;
 
   constructor(call: ConstructorCall) {
-    this._call = call;
-  }
-}
-
-export class CancelCall extends ethereum.Call {
-  get inputs(): CancelCall__Inputs {
-    return new CancelCall__Inputs(this);
-  }
-
-  get outputs(): CancelCall__Outputs {
-    return new CancelCall__Outputs(this);
-  }
-}
-
-export class CancelCall__Inputs {
-  _call: CancelCall;
-
-  constructor(call: CancelCall) {
-    this._call = call;
-  }
-
-  get _depositId(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-}
-
-export class CancelCall__Outputs {
-  _call: CancelCall;
-
-  constructor(call: CancelCall) {
-    this._call = call;
-  }
-}
-
-export class ChangeOwnerCall extends ethereum.Call {
-  get inputs(): ChangeOwnerCall__Inputs {
-    return new ChangeOwnerCall__Inputs(this);
-  }
-
-  get outputs(): ChangeOwnerCall__Outputs {
-    return new ChangeOwnerCall__Outputs(this);
-  }
-}
-
-export class ChangeOwnerCall__Inputs {
-  _call: ChangeOwnerCall;
-
-  constructor(call: ChangeOwnerCall) {
-    this._call = call;
-  }
-
-  get _newOwner(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-}
-
-export class ChangeOwnerCall__Outputs {
-  _call: ChangeOwnerCall;
-
-  constructor(call: ChangeOwnerCall) {
     this._call = call;
   }
 }
@@ -339,6 +287,36 @@ export class DepositCall__Outputs {
   }
 }
 
+export class CancelCall extends ethereum.Call {
+  get inputs(): CancelCall__Inputs {
+    return new CancelCall__Inputs(this);
+  }
+
+  get outputs(): CancelCall__Outputs {
+    return new CancelCall__Outputs(this);
+  }
+}
+
+export class CancelCall__Inputs {
+  _call: CancelCall;
+
+  constructor(call: CancelCall) {
+    this._call = call;
+  }
+
+  get _depositId(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+}
+
+export class CancelCall__Outputs {
+  _call: CancelCall;
+
+  constructor(call: CancelCall) {
+    this._call = call;
+  }
+}
+
 export class WithdrawCall extends ethereum.Call {
   get inputs(): WithdrawCall__Inputs {
     return new WithdrawCall__Inputs(this);
@@ -362,6 +340,14 @@ export class WithdrawCall__Inputs {
 
   get _to(): Address {
     return this._call.inputValues[1].value.toAddress();
+  }
+
+  get _runId(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
+  }
+
+  get _signature(): Bytes {
+    return this._call.inputValues[3].value.toBytes();
   }
 }
 

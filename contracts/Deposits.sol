@@ -126,11 +126,11 @@ contract Deposits is GithubWorkflowClient {
     }
 
     function payout(string memory _issueId, address _to) internal {
-      uint256 value = issueBalances[_issueId];
-      uint256 fee = (value * 100) / 10000;
-      issueBalances[_issueId] = 0;
-      issueWithdrawalRounds[_issueId]++;
-      payable(githubWorkflows["withdraw"].account).transfer(fee);
-      payable(_to).transfer(value - fee);
+        uint256 value = issueBalances[_issueId];
+        uint256 fee = (value * 100) / 10000;
+        issueBalances[_issueId] = 0;
+        issueWithdrawalRounds[_issueId]++;
+        payable(githubWorkflows["withdraw"].account).transfer(fee);
+        payable(_to).transfer(value - fee);
     }
 }

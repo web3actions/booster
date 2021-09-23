@@ -6,9 +6,9 @@ dataSources:
     name: Deposits
     network: kovan
     source:
-      address: "0xB35BA2b30723be7e8BBf4cEa1AaF3A6A09B07001"
+      address: "0xc2F6A03a4B9349935b86a92E661D0AFbCE28F620"
       abi: Deposits
-      startBlock: 27316795
+      startBlock: 27316946
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -19,7 +19,7 @@ dataSources:
         - WithdrawEvent
       abis:
         - name: Deposits
-          file: ../contract/abi.json
+          file: ../build/contracts/Deposits.json
       eventHandlers:
         - event: DepositEvent(uint256,address,string,uint256,uint256)
           handler: handleDepositEvent
