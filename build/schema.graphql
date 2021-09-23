@@ -1,0 +1,18 @@
+type Deposit @entity {
+  id: ID!
+  value: BigInt!
+  sender: Sender!
+  issue: Issue!
+  withdrawalRound: BigInt!
+}
+
+type Sender @entity {
+  id: ID!
+  deposits: [Deposit!] @derivedFrom(field: "sender")
+}
+
+type Issue @entity {
+  id: ID!
+  deposits: [Deposit!] @derivedFrom(field: "issue")
+  withdrawalRound: BigInt!
+}

@@ -1,0 +1,29 @@
+name: Withdraw Bounty
+on:
+  issues:
+    types: [ opened ]
+
+jobs:
+  withdraw:
+    name: Get signature, check eligability and release Bounty
+    runs-on: ubuntu-latest
+    if: ${{ contains(github.event.issue.labels.*.name, 'withdraw') }}
+    steps:
+      - name: Request and wait for signature
+        id: signature
+        uses: cryptoactions/get-signature@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          owner: cryptoactions
+          repo: signer
+      
+      # - name: Check eligability
+
+      - name: Release bounty
+        uses: cryptoactions/tx@8ba603b9d689b9dfefd3f7d95ec3d4443443c067
+        with:
+          rpc-node: ${{ secrets.RPC_NODE }}
+          wallet-key: ${{ secrets.WALLET_KEY }}
+          contract: "0x123"
+          function: "withdraw(string,address,bytes)"
+          inputs: '["${{ fromJSON(github.event.issue.body).issueId }}", "${{ fromJSON(github.event.issue.body).to }}", "${{ steps.signature.outputs.signature }}"]'
