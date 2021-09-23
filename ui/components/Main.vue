@@ -69,7 +69,7 @@
       <div v-if="store.state.issue.closed" class="p-5">
         <a
           v-if="issueBalance != 0"
-          :href="getWithdrawLink(store.state.issue)"
+          :href="getWithdrawLink()"
           target="__blank"
           class="w-full inline-block text-center bg-indigo-700 hover:bg-indigo-900 text-white text-xl font-extrabold rounded-xl px-5 py-3 shadow-md"
         >
@@ -192,8 +192,8 @@ const deposit = async () => {
   waitingForConfirmation.value = false
 }
 
-const getWithdrawLink = (issue) => {
-  return `https://github.com/ethbooster/ethbooster.github.io/issues/new?labels=withdraw&template=withdraw.yml&title=Withdraw&issue=${store.state.issue.url}`
+const getWithdrawLink = () => {
+  return `https://github.com/web3actions/booster/issues/new?labels=withdraw&title=Withdraw&body=${JSON.stringify({ issueId: store.state.issue.node_id, to: 'ENTER-YOUR-ADDRESS' })}`
 }
 
 const issueBalance = computed(() => {
