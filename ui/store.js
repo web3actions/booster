@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 import { ethers, BigNumber } from 'ethers'
-import CONTRACT from '../build/contracts/Deposits.json'
+import CONTRACT from '../contracts/build/Deposits.json'
 
 export default {
   init: () => {
