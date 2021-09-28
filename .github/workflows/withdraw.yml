@@ -3,27 +3,60 @@ on:
   issues:
     types: [ opened ]
 
+env:
+  CONTRACT: "0x8ba603b9d689b9dfefd3f7d95ec3d4443443c067"
+
 jobs:
   withdraw:
-    name: Get signature, check eligability and release Bounty
+    name: Check eligability and release bounty
     runs-on: ubuntu-latest
     if: ${{ contains(github.event.issue.labels.*.name, 'withdraw') }}
     steps:
-      - name: Request and wait for signature
-        id: signature
-        uses: cryptoactions/get-signature@main
+      - uses: actions/checkout@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          owner: cryptoactions
-          repo: signer
+          ref: 9e40df4c29601cc262c9f2381de2f22396129156
       
-      # - name: Check eligability
+      - name: Check eligability
+        uses: actions/github-script@v5
+        id: eligibility
+        with:
+          script: |
+            const checkEligibility = require('./.github/workflows/check-eligibility.js')
+            return await checkEligibility(github)
 
       - name: Release bounty
-        uses: cryptoactions/tx@8ba603b9d689b9dfefd3f7d95ec3d4443443c067
+        if: fromJSON(steps.eligibility.outputs.result)
+        uses: web3actions/tx@8ba603b9d689b9dfefd3f7d95ec3d4443443c067
         with:
-          rpc-node: ${{ secrets.RPC_NODE }}
+          network: kovan
+          infura-key: ${{ secrets.INFURA_KEY }}
           wallet-key: ${{ secrets.WALLET_KEY }}
-          contract: ${{ secrets.CONTRACT }}
-          function: "withdraw(string,address,bytes)"
-          inputs: '["${{ fromJSON(github.event.issue.body).issueId }}", "${{ fromJSON(github.event.issue.body).to }}", "${{ steps.signature.outputs.signature }}"]'
+          contract: ${{ env.CONTRACT }}
+          function: "withdraw(string,address,uint256,bytes)"
+          inputs: '["${{ fromJSON(github.event.issue.body).issueId }}", "${{ fromJSON(github.event.issue.body).to }}"]'
+          signer: web3actions/signer
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Comment success
+        uses: actions/github-script@v5
+        if: fromJSON(steps.eligibility.outputs.result)
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Withdrawal successful!'
+            })
+      
+      - name: Comment failure
+        uses: actions/github-script@v5
+        if: ${{ !fromJSON(steps.eligibility.outputs.result) }}
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Withdrawal failed! You are not eligible to withdraw this bounty.'
+            })

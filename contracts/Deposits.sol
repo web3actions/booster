@@ -5,6 +5,8 @@ pragma solidity 0.8.7;
 import "@web3actions/contracts/src/GithubWorkflowClient.sol";
 
 contract Deposits is GithubWorkflowClient {
+    address owner;
+
     struct Deposit {
         address sender;
         string issueId;
@@ -17,8 +19,18 @@ contract Deposits is GithubWorkflowClient {
     mapping(string => uint256) issueBalances;
     mapping(string => uint256) issueWithdrawalRounds;
 
-    constructor(string memory _hash, address _signer) {
-        registerGithubWorkflow(msg.sender, "withdraw", _hash);
+    constructor(address _signer) {
+        owner = msg.sender;
+        githubWorkflowSigner = _signer;
+    }
+
+    function registerWorkflow(string calldata _name, string calldata _hash) public {
+        require(msg.sender == owner, "Only owner can register workflows.");
+        registerGithubWorkflow(msg.sender, _name, _hash);
+    }
+
+    function setSigner(address _signer) public {
+        require(msg.sender == owner, "Only owner can register workflows.");
         githubWorkflowSigner = _signer;
     }
 

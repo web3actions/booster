@@ -1,6 +1,6 @@
 import { store, BigInt } from '@graphprotocol/graph-ts'
-import { CancelEvent, DepositEvent, WithdrawEvent } from "./generated/Deposits/Deposits"
-import { Issue, Deposit, Sender } from "./generated/schema"
+import { CancelEvent, DepositEvent, WithdrawEvent } from "./subgraph/generated/Deposits/Deposits"
+import { Issue, Deposit, Sender } from "./subgraph/generated/schema"
 
 export function handleDepositEvent(event: DepositEvent): void {
   let issue = Issue.load(event.params.issueId.toString())

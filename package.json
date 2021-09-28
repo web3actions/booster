@@ -6,9 +6,9 @@
     "ui:build": "vite build ui --base=/booster/",
     "ui:serve": "vite preview ui",
     "ui:deploy": "push-dir --dir=ui/dist --branch=gh-pages",
-    "sg:codegen": "graph codegen -o subgraph/generated subgraph/manifest.yml",
-    "sg:build": "graph build -o subgraph/build subgraph/manifest.yml",
-    "sg:deploy": "graph deploy --node https://api.thegraph.com/deploy/ ethbooster/ethbooster subgraph/manifest.yml"
+    "sg:codegen": "graph codegen -o subgraph/generated",
+    "sg:build": "graph build -o subgraph/build",
+    "sg:deploy": "graph deploy --node https://api.thegraph.com/deploy/ web3actions/booster"
   },
   "dependencies": {
     "@headlessui/vue": "^1.4.0",

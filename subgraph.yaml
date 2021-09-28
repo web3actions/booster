@@ -1,14 +1,14 @@
 specVersion: 0.0.2
 schema:
-  file: ./schema.graphql
+  file: ./subgraph-schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: Deposits
     network: kovan
     source:
-      address: "0xc2F6A03a4B9349935b86a92E661D0AFbCE28F620"
+      address: "0x970bFa180549E0D07066915e560cea6Fb1958d69"
       abi: Deposits
-      startBlock: 27316946
+      startBlock: 27388066
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -19,7 +19,7 @@ dataSources:
         - WithdrawEvent
       abis:
         - name: Deposits
-          file: ../build/contracts/Deposits.json
+          file: ./contracts/build/Deposits.json
       eventHandlers:
         - event: DepositEvent(uint256,address,string,uint256,uint256)
           handler: handleDepositEvent
@@ -27,4 +27,4 @@ dataSources:
           handler: handleCancelEvent
         - event: WithdrawEvent(string,address,uint256)
           handler: handleWithdrawEvent
-      file: ./mapping.ts
+      file: ./subgraph-mapping.ts

@@ -240,12 +240,8 @@ export class ConstructorCall__Inputs {
     this._call = call;
   }
 
-  get _hash(): string {
-    return this._call.inputValues[0].value.toString();
-  }
-
   get _signer(): Address {
-    return this._call.inputValues[1].value.toAddress();
+    return this._call.inputValues[0].value.toAddress();
   }
 }
 
@@ -253,6 +249,70 @@ export class ConstructorCall__Outputs {
   _call: ConstructorCall;
 
   constructor(call: ConstructorCall) {
+    this._call = call;
+  }
+}
+
+export class RegisterWorkflowCall extends ethereum.Call {
+  get inputs(): RegisterWorkflowCall__Inputs {
+    return new RegisterWorkflowCall__Inputs(this);
+  }
+
+  get outputs(): RegisterWorkflowCall__Outputs {
+    return new RegisterWorkflowCall__Outputs(this);
+  }
+}
+
+export class RegisterWorkflowCall__Inputs {
+  _call: RegisterWorkflowCall;
+
+  constructor(call: RegisterWorkflowCall) {
+    this._call = call;
+  }
+
+  get _name(): string {
+    return this._call.inputValues[0].value.toString();
+  }
+
+  get _hash(): string {
+    return this._call.inputValues[1].value.toString();
+  }
+}
+
+export class RegisterWorkflowCall__Outputs {
+  _call: RegisterWorkflowCall;
+
+  constructor(call: RegisterWorkflowCall) {
+    this._call = call;
+  }
+}
+
+export class SetSignerCall extends ethereum.Call {
+  get inputs(): SetSignerCall__Inputs {
+    return new SetSignerCall__Inputs(this);
+  }
+
+  get outputs(): SetSignerCall__Outputs {
+    return new SetSignerCall__Outputs(this);
+  }
+}
+
+export class SetSignerCall__Inputs {
+  _call: SetSignerCall;
+
+  constructor(call: SetSignerCall) {
+    this._call = call;
+  }
+
+  get _signer(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class SetSignerCall__Outputs {
+  _call: SetSignerCall;
+
+  constructor(call: SetSignerCall) {
     this._call = call;
   }
 }
