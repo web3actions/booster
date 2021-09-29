@@ -188,6 +188,7 @@ const amount = ref('')
 const waitingForConfirmation = ref(false)
 const deposit = async () => {
   waitingForConfirmation.value = true
+  await store.dispatch('connectWallet')
   await store.dispatch('deposit', amount.value)
   waitingForConfirmation.value = false
 }
