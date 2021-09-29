@@ -50,6 +50,7 @@ module.exports = async (context, github) => {
     // or the person who closed the issue must mention that user in a comment ("release to @username")
     let releasedByComment = false
     issue.node.comments.nodes.forEach(comment => {
+      console.log(comment)
       if (
         comment.author.login === closedEvent.actor.login &&
         comment.body.toLowerCase().includes('release bounty to @' + username)

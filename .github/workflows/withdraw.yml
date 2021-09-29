@@ -13,8 +13,8 @@ jobs:
     if: ${{ contains(github.event.issue.labels.*.name, 'withdraw') }}
     steps:
       - uses: actions/checkout@v2
-        with:
-          ref: a04d7ad366dca64cb222683058402256df4a46b2
+        # with:
+        #   ref: a04d7ad366dca64cb222683058402256df4a46b2
       
       - name: Check eligability
         uses: actions/github-script@v5
