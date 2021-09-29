@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: a3423c80c29490d4ddc051623a765c85f8402b7a
+          ref: 6c24b0b9ac2dd546b6c466d825652539ce818812
       
       - name: Check eligability
         uses: actions/github-script@v5
