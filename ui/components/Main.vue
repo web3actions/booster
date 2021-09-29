@@ -91,9 +91,13 @@
           </button>
           <div class="font-extrabold mb-3">Deposit successful.</div>
           Don't forget to share a link to the bounty and comment on the issue back at GitHub.
-          <button class="relative w-full truncate bg-green-700 border border-green-500 hover:bg-green-800 rounded-xl pl-3 pr-10 py-2 mt-3 hover:shadow-md">
-            <span>https://ethbooster.github.io/#/{{ store.state.issue.repository.owner.login }}/{{ store.state.issue.repository.name }}/{{ store.state.issue.number }}</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute right-2 top-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <button
+            @click="copy(`https://web3actions.github.io/booster/#/${ store.state.issue.repository.owner.login }/${ store.state.issue.repository.name }/${ store.state.issue.number }`)"
+            class="relative w-full truncate bg-green-700 border border-green-500 hover:bg-green-800 rounded-xl pl-3 pr-10 py-2 mt-3 hover:shadow-md"
+          >
+            <span>https://web3actions.github.io/booster/#/{{ store.state.issue.repository.owner.login }}/{{ store.state.issue.repository.name }}/{{ store.state.issue.number }}</span>
+            <i v-if="linkCopied" class="fas fa-check absolute right-3 top-3" />
+            <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute right-2 top-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
             </svg>
           </button>
@@ -101,10 +105,10 @@
             <a :href="store.state.issue.url" target="__blank" class="text-green-900 bg-white hover:bg-gray-100 rounded-2xl px-3 py-2 inline-block shadow">
               <i class="fab fa-github" />
             </a>
-            <a :href="'https://twitter.com/intent/tweet?text=asd'" target="__blank" class="text-green-900 bg-white hover:bg-gray-100 rounded-2xl px-3 py-2 inline-block shadow">
+            <a :href="`https://twitter.com/intent/tweet?text=${ ethers.utils.formatEther(issueBalance) } ETH for solving this issue: ${store.state.issue.url}`" target="__blank" class="text-green-900 bg-white hover:bg-gray-100 rounded-2xl px-3 py-2 inline-block shadow">
               <i class="fab fa-twitter" />
             </a>
-            <a :href="'https://etherscan.io/tx/' + store.state.depositTx" target="__blank" class="text-green-900 bg-white hover:bg-gray-100 rounded-2xl px-3 py-2 inline-block shadow">
+            <a :href="'https://kovan.etherscan.io/tx/' + store.state.depositTx" target="__blank" class="text-green-900 bg-white hover:bg-gray-100 rounded-2xl px-3 py-2 inline-block shadow">
               View on Etherscan
             </a>
           </div>
@@ -211,6 +215,13 @@ const issueBalanceUsd = computed(() => {
   
   return null
 })
+
+const linkCopied = ref(false)
+const copy = (text) => {
+  navigator.clipboard.writeText(text)
+  linkCopied.value = true
+  setTimeout(() => linkCopied.value = false, 2000)
+}
 
 store.dispatch('loadEthUsdPrice')
 setInterval(() => {
