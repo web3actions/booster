@@ -1,4 +1,5 @@
 module.exports = async (github) => {
+  console.log(github)
   const issueId = JSON.parse(github.event.issue.body).issueId
   const username = github.event.issue.author.login
   const query = `query($issueId:ID!) {
