@@ -4,7 +4,7 @@ on:
     types: [ opened ]
 
 env:
-  CONTRACT: "0x8ba603b9d689b9dfefd3f7d95ec3d4443443c067"
+  CONTRACT: "0x970bFa180549E0D07066915e560cea6Fb1958d69"
 
 jobs:
   withdraw:
@@ -26,7 +26,7 @@ jobs:
 
       - name: Release bounty
         if: fromJSON(steps.eligibility.outputs.result)
-        uses: web3actions/tx@main
+        uses: web3actions/tx@bc0119599bd6377e4b4070722d77feb6f07986f8
         with:
           network: kovan
           infura-key: ${{ secrets.INFURA_KEY }}
