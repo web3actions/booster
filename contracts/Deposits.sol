@@ -129,7 +129,7 @@ contract Deposits is GithubWorkflowClient {
         address _to,
         uint256 _runId,
         bytes calldata _signature
-    ) public onlyWorkflow(_runId, "withdraw", _signature) {
+    ) public onlyGithubWorkflow(_runId, "withdraw", _signature) {
         require(issueBalances[_issueId] > 0, "Issue has no deposits.");
 
         payout(_issueId, _to);
