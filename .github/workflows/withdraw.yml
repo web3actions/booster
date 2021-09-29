@@ -13,8 +13,8 @@ jobs:
     if: ${{ contains(github.event.issue.labels.*.name, 'withdraw') }}
     steps:
       - uses: actions/checkout@v2
-        # with:
-        #   ref: a04d7ad366dca64cb222683058402256df4a46b2
+        with:
+          ref: a3423c80c29490d4ddc051623a765c85f8402b7a
       
       - name: Check eligability
         uses: actions/github-script@v5
@@ -26,7 +26,7 @@ jobs:
 
       - name: Release bounty
         if: fromJSON(steps.eligibility.outputs.result)
-        uses: web3actions/tx@8ba603b9d689b9dfefd3f7d95ec3d4443443c067
+        uses: web3actions/tx@310d3ae528165ad6333ef8d63758475466105fd6
         with:
           network: kovan
           infura-key: ${{ secrets.INFURA_KEY }}
