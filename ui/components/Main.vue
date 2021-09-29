@@ -173,12 +173,13 @@ watchEffect(async () => {
         number: Number(issueUrl[3])
       }
     )
+    window.location.hash = `#/${issueUrl[1]}/${issueUrl[2]}/${issueUrl[3]}`
     loadingIssue.value = false
   }
 })
 
 // get issue params from url
-const urlParams = window.location.hash.match(/^#([\w-]+)\/([\w-\.]+)\/(\d+)$/)
+const urlParams = window.location.hash.match(/^#\/([\w-]+)\/([\w-\.]+)\/(\d+)$/)
 if (urlParams) {
   url.value = `https://github.com/${urlParams[1]}/${urlParams[2]}/issues/${urlParams[3]}`
 }
@@ -186,6 +187,7 @@ if (urlParams) {
 const resetIssue = () => {
   store.commit('setIssue', null)
   url.value = ''
+  window.location.hash = ''
 }
 
 const amount = ref('')
