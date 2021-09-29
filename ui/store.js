@@ -8,7 +8,7 @@ export default {
     const ethSigner = ethProvider.getSigner()
     const bareContract = new ethers.Contract(CONTRACT.networks['42'].address, CONTRACT.abi, ethProvider)
     const contract = bareContract.connect(ethSigner)
-    const SUBGRAPH_ENDPOINT = 'https://api.thegraph.com/subgraphs/name/ethbooster/ethbooster'
+    const SUBGRAPH_ENDPOINT = 'https://api.thegraph.com/subgraphs/name/web3actions/booster'
     
     const barePricefeedContract = new ethers.Contract(
       '0x9326BFA02ADD2366b30bacB125260Af641031331',
