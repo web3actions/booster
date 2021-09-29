@@ -115,11 +115,20 @@ export default {
             const pendingTx = await contract.deposit(state.issue.id, { value: ethers.utils.parseEther(amount) })
             const depositTx = await pendingTx.wait()
             commit('setDepositTx', depositTx.transactionHash)
-            dispatch('loadIssue', {
-              owner: state.issue.repository.owner.login,
-              repo: state.issue.repository.name,
-              number: state.issue.number
-            })
+            setTimeout(() => {
+              dispatch('loadIssue', {
+                owner: state.issue.repository.owner.login,
+                repo: state.issue.repository.name,
+                number: state.issue.number
+              })
+            }, 2000)
+            setTimeout(() => {
+              dispatch('loadIssue', {
+                owner: state.issue.repository.owner.login,
+                repo: state.issue.repository.name,
+                number: state.issue.number
+              })
+            }, 6000)
           } catch {
             commit('setDepositTx', null)
           }
