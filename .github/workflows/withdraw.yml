@@ -26,7 +26,7 @@ jobs:
 
       - name: Release bounty
         if: fromJSON(steps.eligibility.outputs.result)
-        uses: web3actions/tx@310d3ae528165ad6333ef8d63758475466105fd6
+        uses: web3actions/tx@main
         with:
           network: kovan
           infura-key: ${{ secrets.INFURA_KEY }}
