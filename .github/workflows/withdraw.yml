@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: 6f3e53d4c157ce376743b5abba7637eb5ac5b5e5
+          ref: 04d404cbb0615c46d78e2ffea0e6d23a3e900f8b
       
       - name: Check eligability
         uses: actions/github-script@v5
@@ -22,7 +22,7 @@ jobs:
         with:
           script: |
             const checkEligibility = require('./.github/workflows/check-eligibility.js')
-            return await checkEligibility(github)
+            return await checkEligibility(context, github)
 
       - name: Release bounty
         if: fromJSON(steps.eligibility.outputs.result)
