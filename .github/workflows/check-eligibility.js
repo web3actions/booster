@@ -37,7 +37,7 @@ module.exports = async (context, github) => {
   const issue = await github.graphql(query, variables)
   const closedEvent = issue.node.timelineItems.nodes[0]
 
-  if (!issue.closed) return false
+  if (!issue.node.closed) return false
 
   // either the issue was closed by a pull request by the user
   if (
@@ -49,9 +49,7 @@ module.exports = async (context, github) => {
   } else {
     // or the person who closed the issue must mention that user in a comment ("release to @username")
     let releasedByComment = false
-    console.log(issue)
     issue.node.comments.nodes.forEach(comment => {
-      console.log(comment)
       if (
         comment.author.login === closedEvent.actor.login &&
         comment.body.toLowerCase().includes('release bounty to @' + username)
