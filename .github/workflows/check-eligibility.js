@@ -3,8 +3,8 @@ module.exports = async (context, github) => {
   const username = context.payload.issue.user.login
   const query = `query($issueId:ID!) {
     node(id: $issueId) {
-      closed
       ... on Issue {
+        closed
         comments (last: 100, orderBy: { field: , UPDATED_AT, direction: DESC}) {
           nodes {
             body
