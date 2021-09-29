@@ -49,6 +49,7 @@ module.exports = async (context, github) => {
   } else {
     // or the person who closed the issue must mention that user in a comment ("release to @username")
     let releasedByComment = false
+    console.log(issue)
     issue.node.comments.nodes.forEach(comment => {
       console.log(comment)
       if (
