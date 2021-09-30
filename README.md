@@ -1,20 +1,8 @@
-# Ethbooster
-
-Ethbooster is a very simple ETH bounty system for GitHub issues.
+# Web3 Actions Booster
 
 This repository contains:
 
-- Vue3 UI
-- Smart Contract
-- Subgraph
-- Oracle Workflow
-  - Job Scripts
-  - Issue Templates
-
-# UI
-
-# Contract
-
-# Subgraph
-
-# Oracle
+- [Vue3 UI](https://github.com/web3actions/booster/blob/main/ui)
+- [Smart Contract](https://github.com/web3actions/booster/blob/main/contracts/Deposits.sol)
+- [Subgraph](https://github.com/web3actions/booster/blob/main/subgraph.yaml)
+- [Withdrawal Workflow](https://github.com/web3actions/booster/blob/main/.github/workflows/withdraw.yml)
