@@ -36,7 +36,7 @@ jobs:
           inputs: '["${{ fromJSON(github.event.issue.body).issueId }}", "${{ fromJSON(github.event.issue.body).to }}"]'
           signer: web3actions/signer
           github-token: ${{ secrets.PAT }}
-          gas-limit: 100000
+          gas-limit: 200000
       
       - name: Comment success
         uses: actions/github-script@v5
