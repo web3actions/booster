@@ -204,7 +204,7 @@ const getWithdrawLink = () => {
 }
 
 const issueBalance = computed(() => {
-  const balance = store.state.issue.deposits.reduce((balance, deposit) => {
+  const balance = store.state.issue.deposits.filter(deposit => deposit.withdrawalRound === store.state.issue.withdrawalRound).reduce((balance, deposit) => {
     return balance.add(BigNumber.from(deposit.value))
   }, BigNumber.from(0))
   return balance

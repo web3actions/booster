@@ -74,6 +74,7 @@ export default {
                 id
                 deposits {
                   id
+                  withdrawalRound
                   value
                   issue {
                     id
@@ -91,8 +92,7 @@ export default {
 
             for (let i = 0; i < deposits.length; i++) {
               const issueResponse = await fetch('https://mktcode.uber.space/ethbooster/issue/' + deposits[i].issue.id).then(response => response.json())
-              deposits[i].issue = issueResponse.node
-              deposits[i].issue.withdrawalRound = await contract.getIssueWithdrawalRound(deposits[i].issue.id)
+              deposits[i].issue = { ...deposits[i].issue, ...issueResponse.node }
             }
     
             commit('setDeposits', deposits)
@@ -146,6 +146,7 @@ export default {
                 deposits {
                   id
                   value
+                  withdrawalRound
                 }
               }
             }`

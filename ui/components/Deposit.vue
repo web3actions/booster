@@ -18,7 +18,7 @@
       <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
     </svg>
     <button
-      v-else
+      v-else-if="deposit.withdrawalRound === deposit.issue.withdrawalRound"
       class="bg-gray-100 text-white hover:bg-red-600 rounded-full p-1"
       @click="cancel"
     >
@@ -26,6 +26,9 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
       </svg>
     </button>
+    <span v-else class="bg-green-100 text-green-900 rounded-xl px-3 py-2">
+      claimed
+    </span>
   </div>
 </template>
 
