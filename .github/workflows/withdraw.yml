@@ -40,7 +40,7 @@ jobs:
       
       - name: Comment success
         uses: actions/github-script@v5
-        if: fromJSON(steps.eligibility.outputs.result)
+        if: always() && fromJSON(steps.eligibility.outputs.result)
         with:
           script: |
             github.rest.issues.createComment({
@@ -52,7 +52,7 @@ jobs:
       
       - name: Comment failure
         uses: actions/github-script@v5
-        if: ${{ !fromJSON(steps.eligibility.outputs.result) }}
+        if: ${{ always() && !fromJSON(steps.eligibility.outputs.result) }}
         with:
           script: |
             github.rest.issues.createComment({
@@ -60,4 +60,16 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: 'Withdrawal failed! You are not eligible to withdraw this bounty.'
+            })
+      
+      - name: Close issue
+        if: always()
+        uses: actions/github-script@v5
+        with:
+          script: |
+            github.rest.issues.update({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'closed'
             })
