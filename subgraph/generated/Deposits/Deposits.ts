@@ -88,6 +88,23 @@ export class WithdrawEvent__Params {
   }
 }
 
+export class Deposits__githubWorkflowsResult {
+  value0: string;
+  value1: Address;
+
+  constructor(value0: string, value1: Address) {
+    this.value0 = value0;
+    this.value1 = value1;
+  }
+
+  toMap(): TypedMap<string, ethereum.Value> {
+    let map = new TypedMap<string, ethereum.Value>();
+    map.set("value0", ethereum.Value.fromString(this.value0));
+    map.set("value1", ethereum.Value.fromAddress(this.value1));
+    return map;
+  }
+}
+
 export class Deposits__getDepositByIdResult {
   value0: Address;
   value1: string;
@@ -114,6 +131,62 @@ export class Deposits__getDepositByIdResult {
 export class Deposits extends ethereum.SmartContract {
   static bind(address: Address): Deposits {
     return new Deposits("Deposits", address);
+  }
+
+  githubWorkflowSigner(): Address {
+    let result = super.call(
+      "githubWorkflowSigner",
+      "githubWorkflowSigner():(address)",
+      []
+    );
+
+    return result[0].toAddress();
+  }
+
+  try_githubWorkflowSigner(): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "githubWorkflowSigner",
+      "githubWorkflowSigner():(address)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  githubWorkflows(param0: string): Deposits__githubWorkflowsResult {
+    let result = super.call(
+      "githubWorkflows",
+      "githubWorkflows(string):(string,address)",
+      [ethereum.Value.fromString(param0)]
+    );
+
+    return new Deposits__githubWorkflowsResult(
+      result[0].toString(),
+      result[1].toAddress()
+    );
+  }
+
+  try_githubWorkflows(
+    param0: string
+  ): ethereum.CallResult<Deposits__githubWorkflowsResult> {
+    let result = super.tryCall(
+      "githubWorkflows",
+      "githubWorkflows(string):(string,address)",
+      [ethereum.Value.fromString(param0)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(
+      new Deposits__githubWorkflowsResult(
+        value[0].toString(),
+        value[1].toAddress()
+      )
+    );
   }
 
   getDepositIdsBySender(): Array<BigInt> {
@@ -270,12 +343,8 @@ export class RegisterWorkflowCall__Inputs {
     this._call = call;
   }
 
-  get _name(): string {
-    return this._call.inputValues[0].value.toString();
-  }
-
   get _hash(): string {
-    return this._call.inputValues[1].value.toString();
+    return this._call.inputValues[0].value.toString();
   }
 }
 
