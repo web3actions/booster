@@ -8,7 +8,9 @@
     "ui:deploy": "push-dir --dir=ui/dist --branch=gh-pages",
     "sg:codegen": "graph codegen -o subgraph/generated",
     "sg:build": "graph build -o subgraph/build",
-    "sg:deploy": "graph deploy --node https://api.thegraph.com/deploy/ web3actions/booster"
+    "sg:deploy": "graph deploy --node https://api.thegraph.com/deploy/ web3actions/booster",
+    "sc:compile": "rm -rf contracts/build && truffle compile",
+    "sc:deploy": "truffle migrate --network kovan"
   },
   "dependencies": {
     "@headlessui/vue": "^1.4.0",
