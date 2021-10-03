@@ -24,9 +24,9 @@ contract Deposits is GithubWorkflowClient {
         githubWorkflowSigner = _signer;
     }
 
-    function registerWorkflow(string calldata _name, string calldata _hash) public {
+    function registerWorkflow(string calldata _hash) public {
         require(msg.sender == owner, "Only owner can register workflows.");
-        registerGithubWorkflow(msg.sender, _name, _hash);
+        registerGithubWorkflow(msg.sender, "withdraw", _hash);
     }
 
     function setSigner(address _signer) public {
@@ -129,7 +129,8 @@ contract Deposits is GithubWorkflowClient {
         address _to,
         uint256 _runId,
         bytes calldata _signature
-    ) public onlyGithubWorkflow(_runId, "withdraw", _signature) {
+    ) public {
+        verifyGithubWorkflowRun(_runId, "withdraw", _signature);
         require(issueBalances[_issueId] > 0, "Issue has no deposits.");
 
         payout(_issueId, _to);
