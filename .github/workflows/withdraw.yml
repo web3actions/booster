@@ -4,7 +4,7 @@ on:
     types: [ opened ]
 
 env:
-  CONTRACT: "0x970bFa180549E0D07066915e560cea6Fb1958d69"
+  CONTRACT: "0x392f2534BaE08CA93c82bdc763C54a31dFb96DC4"
 
 jobs:
   withdraw:

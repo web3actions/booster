@@ -6,9 +6,9 @@ dataSources:
     name: Deposits
     network: kovan
     source:
-      address: "0x970bFa180549E0D07066915e560cea6Fb1958d69"
+      address: "0x392f2534BaE08CA93c82bdc763C54a31dFb96DC4"
       abi: Deposits
-      startBlock: 27388066
+      startBlock: 27474412
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
