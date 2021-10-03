@@ -200,7 +200,7 @@ const deposit = async () => {
 }
 
 const getWithdrawLink = () => {
-  return `https://github.com/web3actions/booster/issues/new?labels=withdraw&template=withdraw.md&title=Withdraw&body=${JSON.stringify({ issueId: store.state.issue.id, to: 'ENTER-YOUR-ADDRESS' })}`
+  return `https://github.com/web3actions/booster/issues/new?title=Withdraw Bounty&body=${JSON.stringify({ issueId: store.state.issue.id, to: 'ENTER-YOUR-ADDRESS' })}`
 }
 
 const issueBalance = computed(() => {

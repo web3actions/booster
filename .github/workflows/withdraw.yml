@@ -10,7 +10,7 @@ jobs:
   withdraw:
     name: Check eligability and release bounty
     runs-on: ubuntu-latest
-    if: ${{ contains(github.event.issue.labels.*.name, 'withdraw') }}
+    if: ${{ github.event.issue.title == 'Withdraw Bounty' }}
     steps:
       - uses: actions/checkout@v2
         with:
